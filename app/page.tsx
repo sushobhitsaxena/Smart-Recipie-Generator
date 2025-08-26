@@ -337,21 +337,207 @@
 //     </main>
 //   )
 // }
+// -----------------------------this is working code below-----------------------------
+// 'use client'
+// import React, { useMemo, useState } from 'react'
+// import { useEffect } from 'react'
+// import type { Recipe } from '../lib/types'
+
+// // import Dropzone from '../components/Dropzone'
+// import ImageDropzone from '../components/ImageDropzone'
+
+// import IngredientPicker from '../components/IngredientPicker'
+// import Filters from '../components/Filters'
+// import RecipeCard from '../components/RecipeCard'
+// import FavoritesDrawer from '../components/FavoritesDrawer' // ✅ use real drawer
+
+// import { RECIPES } from '../lib/recipes'
+// import { findMatches } from '../lib/match'
+// import type { Diet } from '../lib/types'
+
+// export default function Page() {
+//   const [ingredients, setIngredients] = useState<string[]>([])
+//   const [diet, setDiet] = useState<Diet>('none')
+//   const [maxTime, setMaxTime] = useState<number | undefined>(30)
+//   const [difficulty, setDifficulty] = useState<Array<'easy' | 'medium' | 'hard'>>([])
+//   const [caption, setCaption] = useState('')
+
+//   const results = useMemo(
+//     () =>
+//       findMatches(RECIPES, {
+//         userIngredients: ingredients,
+//         diet,
+//         maxTime,
+//         difficulty,
+//       }),
+//     [ingredients, diet, maxTime, difficulty]
+//   )
+
+//   return (
+//     <main className="space-y-6">
+//       <h1 className="text-2xl font-bold">Smart Recipe Generator</h1>
+
+//       <IngredientPicker value={ingredients} onChange={setIngredients} />
+
+//      <ImageDropzone
+//   onRecognize={(ings, cap) => {
+//     setCaption(cap || '')
+//     if (ings?.length) setIngredients([...new Set([...ingredients, ...ings])])
+//   }}
+// />
+
+
+//       {caption && (
+//         <p className="text-xs opacity-60">
+//           Caption guess: <em>{caption}</em>
+//         </p>
+//       )}
+
+//       <Filters
+//         diet={diet}
+//         setDiet={setDiet}
+//         maxTime={maxTime}
+//         setMaxTime={setMaxTime}
+//         difficulty={difficulty}
+//         setDifficulty={setDifficulty}
+//       />
+
+//       <section className="space-y-3">
+//         <h2 className="text-xl font-semibold">Suggestions</h2>
+//         {results.length === 0 && (
+//           <div className="opacity-60">
+//             No matches yet. Try adding tomato, onion, rice…
+//           </div>
+//         )}
+//         <div className="grid md:grid-cols-2 gap-4">
+//           {results.slice(0, 10).map((x) => (
+//             <RecipeCard key={x.recipe.id} recipe={x.recipe as any} />
+//           ))}
+//         </div>
+//       </section>
+
+//       {/* ✅ real Favorites drawer */}
+//       <FavoritesDrawer />
+//     </main>
+//   )
+// }
+
+
+
+
+
+
+
+// 'use client'
+// import React, { useEffect, useMemo, useState } from 'react'
+// import type { Recipe, Diet } from '../lib/types'
+
+// import ImageDropzone from '../components/ImageDropzone'
+// import IngredientPicker from '../components/IngredientPicker'
+// import Filters from '../components/Filters'
+// import RecipeCard from '../components/RecipeCard'
+// import FavoritesDrawer from '../components/FavoritesDrawer'
+
+// import { RECIPES } from '../lib/recipes'
+// import { findMatches } from '../lib/match'
+// import { getPersonalizedRecommendations } from '../lib/recommend'
+
+// export default function Page() {
+//   const [ingredients, setIngredients] = useState<string[]>([])
+//   const [diet, setDiet] = useState<Diet>('none')
+//   const [maxTime, setMaxTime] = useState<number | undefined>(30)
+//   const [difficulty, setDifficulty] = useState<Array<'easy' | 'medium' | 'hard'>>([])
+//   const [caption, setCaption] = useState('')
+//   const [recs, setRecs] = useState<Recipe[]>([])
+
+//   const results = useMemo(
+//     () =>
+//       findMatches(RECIPES, {
+//         userIngredients: ingredients,
+//         diet,
+//         maxTime,
+//         difficulty,
+//       }),
+//     [ingredients, diet, maxTime, difficulty]
+//   )
+
+//   // compute recs on the client so we can read localStorage
+//   useEffect(() => {
+//     setRecs(getPersonalizedRecommendations(6))
+//   }, [ingredients]) // any interaction can retrigger; tweak as you like
+
+//   return (
+//     <main className="space-y-6">
+//       <h1 className="text-2xl font-bold">Smart Recipe Generator</h1>
+
+//       <IngredientPicker value={ingredients} onChange={setIngredients} />
+
+//       <ImageDropzone
+//         onRecognize={(ings, cap) => {
+//           setCaption(cap || '')
+//           if (ings?.length) setIngredients([...new Set([...ingredients, ...ings])])
+//         }}
+//       />
+
+//       {caption && (
+//         <p className="text-xs opacity-60">
+//           Caption guess: <em>{caption}</em>
+//         </p>
+//       )}
+
+//       <Filters
+//         diet={diet}
+//         setDiet={setDiet}
+//         maxTime={maxTime}
+//         setMaxTime={setMaxTime}
+//         difficulty={difficulty}
+//         setDifficulty={setDifficulty}
+//       />
+
+//       <section className="space-y-3">
+//         <h2 className="text-xl font-semibold">Suggestions</h2>
+//         {results.length === 0 && (
+//           <div className="opacity-60">No matches yet. Try adding tomato, onion, rice…</div>
+//         )}
+//         <div className="grid md:grid-cols-2 gap-4">
+//           {results.slice(0, 10).map((x) => (
+//             <RecipeCard key={x.recipe.id} recipe={x.recipe as any} />
+//           ))}
+//         </div>
+//       </section>
+
+//       {recs.length > 0 && (
+//         <section className="space-y-3">
+//           <h2 className="text-xl font-semibold">Recommended For You</h2>
+//           <div className="grid md:grid-cols-2 gap-4">
+//             {recs.map((r) => (
+//               <RecipeCard key={r.id} recipe={r as any} />
+//             ))}
+//           </div>
+//         </section>
+//       )}
+
+//       <FavoritesDrawer />
+//     </main>
+//   )
+// }
+
+
 
 'use client'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
+import type { Recipe, Diet } from '../lib/types'
 
-import Dropzone from '../components/Dropzone'
+import ImageDropzone from '../components/ImageDropzone'
 import IngredientPicker from '../components/IngredientPicker'
 import Filters from '../components/Filters'
+import CuisineFilter from '../components/CuisineFilter' // NEW
 import RecipeCard from '../components/RecipeCard'
-
-// ✅ Use FD (our test favorites component)
-import FD from '../components/FD'
+import FavoritesDrawer from '../components/FavoritesDrawer'
 
 import { RECIPES } from '../lib/recipes'
 import { findMatches } from '../lib/match'
-import type { Diet } from '../lib/types'
+import { getPersonalizedRecommendations } from '../lib/recommend' // if you added this
 
 export default function Page() {
   const [ingredients, setIngredients] = useState<string[]>([])
@@ -359,6 +545,32 @@ export default function Page() {
   const [maxTime, setMaxTime] = useState<number | undefined>(30)
   const [difficulty, setDifficulty] = useState<Array<'easy' | 'medium' | 'hard'>>([])
   const [caption, setCaption] = useState('')
+  const [recs, setRecs] = useState<Recipe[]>([])
+  const [cuisinesSel, setCuisinesSel] = useState<string[]>([]) // NEW
+
+  // NEW: compute available cuisines from recipe DB (sorted, unique)
+  const cuisinesAll = useMemo(
+    () => Array.from(new Set(RECIPES.map(r => r.cuisine))).sort(),
+    []
+  )
+
+  // OPTIONAL: client-side personalized recs
+  useEffect(() => {
+    try { setRecs(getPersonalizedRecommendations?.(6) ?? []) } catch {}
+  }, [ingredients])
+
+  // NEW: persist ingredients across refreshes
+  useEffect(() => {
+    const key = 'srg:ingredients'
+    try {
+      const saved = JSON.parse(localStorage.getItem(key) || '[]')
+      if (Array.isArray(saved)) setIngredients(saved)
+    } catch {}
+  }, [])
+  useEffect(() => {
+    const key = 'srg:ingredients'
+    try { localStorage.setItem(key, JSON.stringify(ingredients)) } catch {}
+  }, [ingredients])
 
   const results = useMemo(
     () =>
@@ -367,8 +579,9 @@ export default function Page() {
         diet,
         maxTime,
         difficulty,
+        cuisine: cuisinesSel, // NEW
       }),
-    [ingredients, diet, maxTime, difficulty]
+    [ingredients, diet, maxTime, difficulty, cuisinesSel]
   )
 
   return (
@@ -377,7 +590,7 @@ export default function Page() {
 
       <IngredientPicker value={ingredients} onChange={setIngredients} />
 
-      <Dropzone
+      <ImageDropzone
         onRecognize={(ings, cap) => {
           setCaption(cap || '')
           if (ings?.length) setIngredients([...new Set([...ingredients, ...ings])])
@@ -399,12 +612,17 @@ export default function Page() {
         setDifficulty={setDifficulty}
       />
 
+      {/* NEW: Cuisine filter */}
+      <CuisineFilter
+        cuisines={cuisinesAll}
+        selected={cuisinesSel}
+        onChange={setCuisinesSel}
+      />
+
       <section className="space-y-3">
         <h2 className="text-xl font-semibold">Suggestions</h2>
         {results.length === 0 && (
-          <div className="opacity-60">
-            No matches yet. Try adding tomato, onion, rice…
-          </div>
+          <div className="opacity-60">No matches yet. Try adding tomato, onion, rice…</div>
         )}
         <div className="grid md:grid-cols-2 gap-4">
           {results.slice(0, 10).map((x) => (
@@ -413,11 +631,18 @@ export default function Page() {
         </div>
       </section>
 
-      {/* ✅ render FD, not FavoritesDrawer */}
-      <FD />
+      {recs.length > 0 && (
+        <section className="space-y-3">
+          <h2 className="text-xl font-semibold">Recommended For You</h2>
+          <div className="grid md:grid-cols-2 gap-4">
+            {recs.map((r) => (
+              <RecipeCard key={r.id} recipe={r as any} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      <FavoritesDrawer />
     </main>
   )
 }
-
-
-

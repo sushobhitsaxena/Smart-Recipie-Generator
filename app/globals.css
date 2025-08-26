@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #41aa1b;
+  --foreground: #f2eaea;
 }
 :root { color-scheme: dark; }
 html, body { height: 100%; }
@@ -26,3 +26,103 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+
+
+/* @import "tailwindcss"; */
+
+/* === THEME TOKENS (Tailwind v4: @theme) === */
+ /* @theme {
+  --color-bg:        hsl(240 10% 7%);    /* page background (dark) */
+  /* --color-fg:        hsl(0 0% 98%);      /* main foreground */
+  /* --color-muted:     hsl(240 5% 64%);    /* subtle text */
+  /* --color-border:    hsl(240 4% 20%);    /* borders */
+  /* --color-surface:   hsl(240 6% 12%);    /* cards / surfaces */
+/* 
+  --color-primary:   hsl(151 55% 41%);   /* green accent */
+  /* --color-primary-600: hsl(151 55% 35%);
+  --color-primary-700: hsl(151 50% 29%);
+
+  --radius: 1rem;
+  --shadow-card: 0 8px 24px -12px rgb(0 0 0 / 0.45);
+} */ 
+
+/* Optional light mode (if you want a toggle later) */
+/* :root.light {
+  --color-bg:        hsl(0 0% 99%);
+  --color-fg:        hsl(240 6% 10%);
+  --color-muted:     hsl(240 5% 40%);
+  --color-border:    hsl(240 6% 90%);
+  --color-surface:   hsl(0 0% 100%);
+} */
+
+/* Global element resets */
+/* * { outline: none; }
+html, body { height: 100%; }
+::selection { background: color-mix(in oklab, var(--color-primary) 45%, transparent); } */
+
+/* === COMPONENT CLASSES (v4: use layers via plain css) === */
+
+/* Buttons */
+/* .btn {
+  @apply inline-flex items-center justify-center gap-2 px-3 py-2 rounded-2xl border transition
+          active:scale-[.98] disabled:opacity-50 disabled:pointer-events-none;
+  border-color: var(--color-border);
+  background: color-mix(in oklab, var(--color-surface) 92%, transparent);
+}
+.btn:hover { background: color-mix(in oklab, var(--color-surface) 80%, transparent); }
+.btn:focus-visible { box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-primary) 35%, transparent); } */
+
+/* .btn-primary {
+  @apply btn text-white border-0;
+  background: var(--color-primary);
+}
+.btn-primary:hover { background: var(--color-primary-600); }
+.btn-primary:active { background: var(--color-primary-700); } */
+
+/* Inputs */
+/* .input {
+  @apply w-full px-3 py-2 rounded-2xl border bg-transparent;
+  border-color: var(--color-border);
+}
+.input::placeholder { color: var(--color-muted); }
+.select { @apply input; }
+.number { @apply input w-24 text-center; } */
+
+/* Card / surface */
+/* .card {
+  @apply rounded-2xl border p-4;
+  border-color: var(--color-border);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+} */
+
+/* Tiny chip (for tags / selected items) */
+/* .chip {
+  @apply inline-flex items-center gap-2 rounded-full text-xs px-2 py-1 border;
+  border-color: color-mix(in oklab, var(--color-border) 60%, transparent);
+  background: color-mix(in oklab, var(--color-surface) 70%, transparent); */
+/* } */
+
+/* Icon button */
+/* .icon-btn {
+  @apply inline-grid place-items-center rounded-full border w-9 h-9;
+  border-color: var(--color-border);
+  background: color-mix(in oklab, var(--color-surface) 85%, transparent);
+}
+.icon-btn:hover { background: color-mix(in oklab, var(--color-surface) 70%, transparent); } */
+
+/* Section title */
+/* .section-title { @apply text-xl font-semibold; color: var(--color-fg); }
+.subtle { color: var(--color-muted); } */
+
+/* Dropzone */
+/* .dropzone {
+  @apply border-2 border-dashed rounded-3xl p-5 text-center cursor-pointer transition;
+  border-color: var(--color-border);
+  background: color-mix(in oklab, var(--color-surface) 85%, transparent);
+}
+.dropzone:hover { background: color-mix(in oklab, var(--color-surface) 70%, transparent); }
+.dropzone .hint { @apply text-sm; color: var(--color-muted); } */
+
