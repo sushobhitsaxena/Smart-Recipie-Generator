@@ -1277,6 +1277,205 @@
 
 
 
+// 'use client'
+// import React, { useEffect, useMemo, useState } from 'react'
+// import type { Recipe, Diet } from '../lib/types'
+
+// import ImageDropzone from '../components/ImageDropzone'
+// import IngredientPicker from '../components/IngredientPicker'
+// import Filters from '../components/Filters'
+// import CuisineFilter from '../components/CuisineFilter' // if you added it
+// import RecipeCard from '../components/RecipeCard'
+// import FavoritesDrawer from '../components/FavoritesDrawer'
+// import SkeletonCard from '../components/SkeletonCard'
+// import EmptyState from '../components/EmptyState'
+// import MobileFilters from '../components/MobileFilters' // ✅ new
+
+// import { RECIPES } from '../lib/recipes'
+// import { findMatches } from '../lib/match'
+// import { getPersonalizedRecommendations } from '../lib/recommend'
+
+// // ⬇️ UI imports
+// import { Card, CardContent } from "../components/card"
+
+// export default function Page() {
+//   const [ingredients, setIngredients] = useState<string[]>([])
+//   const [diet, setDiet] = useState<Diet>('none')
+//   const [maxTime, setMaxTime] = useState<number | undefined>(30)
+//   const [difficulty, setDifficulty] = useState<Array<'easy' | 'medium' | 'hard'>>([])
+//   const [caption, setCaption] = useState('')
+//   const [recs, setRecs] = useState<Recipe[]>([])
+//   const [loading, setLoading] = useState(false)
+//   const [cuisinesSel, setCuisinesSel] = useState<string[]>([])
+
+//   const cuisinesAll = useMemo(
+//     () => Array.from(new Set(RECIPES.map(r => r.cuisine))).sort(),
+//     []
+//   )
+
+//   useEffect(() => {
+//     try {
+//       const recList = getPersonalizedRecommendations?.({
+//         diet,
+//         cuisines: cuisinesSel,
+//         userIngredients: ingredients,
+//         limit: 6,
+//       }) ?? []
+//       const uniq = Array.from(new Map(recList.map(r => [r.id, r])).values())
+//       setRecs(uniq)
+//     } catch {
+//       setRecs([])
+//     }
+//   // ✅ include all inputs that influence recs
+//   },[ingredients, diet, cuisinesSel])
+
+//   const results = useMemo(
+//     () =>
+//       findMatches(RECIPES, {
+//         userIngredients: ingredients,
+//         diet,
+//         maxTime,
+//         difficulty,
+//         cuisine: cuisinesSel,
+//       }),
+//     [ingredients, diet, maxTime, difficulty, cuisinesSel]
+//   )
+
+//   const uniqueResults = useMemo(() => {
+//     const seen = new Set<string>()
+//     return results.filter(x => {
+//       const id = x.recipe.id
+//       if (seen.has(id)) return false
+//       seen.add(id)
+//       return true
+//     })
+//   }, [results])
+
+//   // ✅ shared renderer so mobile sheet + desktop sidebar stay in sync
+//   const renderFilters = () => (
+//     <div className="space-y-4">
+//       <Filters
+//         diet={diet}
+//         setDiet={setDiet}
+//         maxTime={maxTime}
+//         setMaxTime={setMaxTime}
+//         difficulty={difficulty}
+//         setDifficulty={setDifficulty}
+//       />
+//       {/* Optional cuisine filter */}
+//       {/* <CuisineFilter cuisines={cuisinesAll} selected={cuisinesSel} onChange={setCuisinesSel} /> */}
+//     </div>
+//   )
+
+//   return (
+//     <div className="space-y-8">
+//       {/* === HEADER CARD (kept) === */}
+//       <Card className="shadow-lg rounded-2xl bg-gradient-to-r from-green-50 to-teal-50">
+//         <CardContent className="p-8 space-y-6">
+//           <div className="text-center space-y-2">
+//             <h1 className="text-4xl font-bold text-gray-800">🍳 Smart Recipe Generator</h1>
+//             <p className="text-gray-600">Find delicious recipes with the ingredients you already have</p>
+//           </div>
+
+//           {/* === INGREDIENT INPUT + UPLOAD === */}
+//           <div className="flex flex-col md:flex-row gap-6 items-start md:items-center">
+//             <div className="flex-1 w-full">
+//               <IngredientPicker value={ingredients} onChange={setIngredients} />
+//             </div>
+//             <div className="flex-1 w-full">
+//               <ImageDropzone
+//                 onRecognize={(ings, cap) => {
+//                   setCaption(cap || '')
+//                   if (ings?.length) setIngredients([...new Set([...ingredients, ...ings])])
+//                 }}
+//                 onLoadingChange={setLoading}
+//               />
+//             </div>
+//           </div>
+
+//           {caption && (
+//             <p className="text-sm text-gray-500 italic text-center">
+//               Caption guess: “{caption}”
+//             </p>
+//           )}
+
+//           {/* === MOBILE FILTER SHEET BUTTON (new) === */}
+//           <div className="md:hidden pt-2">
+//             <MobileFilters renderFilters={renderFilters} />
+//           </div>
+
+//           {/* (desktop filters move to sticky sidebar below) */}
+//         </CardContent>
+//       </Card>
+
+//       {/* === CONTENT AREA: desktop sidebar + results === */}
+//       <div className="grid md:grid-cols-[280px,1fr] gap-6">
+//         {/* === DESKTOP STICKY FILTERS (new) === */}
+//         <aside className="hidden md:block">
+//           <div className="card md:sticky md:top-4 md:h-fit space-y-4">
+//             <h3 className="font-semibold">Filters</h3>
+//             {renderFilters()}
+//           </div>
+//         </aside>
+
+//         {/* === RESULTS === */}
+//         <section className="space-y-3">
+//           <h2 className="section-title">Suggestions</h2>
+
+//           {loading && (
+//             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+//               {Array.from({ length: 6 }).map((_, i) => (
+//                 <SkeletonCard key={i} />
+//               ))}
+//             </div>
+//           )}
+
+//           {!loading && uniqueResults.length === 0 && (
+//             <EmptyState message="No matches yet. Try adding tomato, onion, or rice — or relax filters." />
+//           )}
+
+//             {/* this is the code without expandable version  */}
+//           {/* {!loading && uniqueResults.length > 0 && (
+//             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+//               {uniqueResults.slice(0, 12).map((x) => (
+//                 <RecipeCard key={x.recipe.id} recipe={x.recipe as any} userIngredients={ingredients} />
+//               ))}
+//             </div>
+//           )} */}
+
+//           {/* this is after the expandable one feature set it according to you */}
+
+//           {!loading && uniqueResults.length > 0 && (
+//   <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
+//     {uniqueResults.slice(0, 12).map((x) => (
+//       <div key={x.recipe.id} style={{ breakInside: 'avoid' }} className="mb-4">
+//         <RecipeCard recipe={x.recipe as any} userIngredients={ingredients} />
+//       </div>
+//     ))}
+//   </div>
+// )}
+
+
+//           {/* === PERSONALIZED RECS === */}
+//           {recs.length > 0 && (
+//             <div className="space-y-3 pt-4">
+//               <h2 className="section-title">Recommended For You</h2>
+//               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+//                 {recs.map((r) => (
+//                   <RecipeCard key={r.id} recipe={r as any} userIngredients={ingredients} />
+//                 ))}
+//               </div>
+//             </div>
+//           )}
+//         </section>
+//       </div>
+
+//       <FavoritesDrawer />
+//     </div>
+//   )
+// }
+
+
 'use client'
 import React, { useEffect, useMemo, useState } from 'react'
 import type { Recipe, Diet } from '../lib/types'
@@ -1284,18 +1483,18 @@ import type { Recipe, Diet } from '../lib/types'
 import ImageDropzone from '../components/ImageDropzone'
 import IngredientPicker from '../components/IngredientPicker'
 import Filters from '../components/Filters'
-import CuisineFilter from '../components/CuisineFilter' // if you added it
+import CuisineFilter from '../components/CuisineFilter'
 import RecipeCard from '../components/RecipeCard'
 import FavoritesDrawer from '../components/FavoritesDrawer'
 import SkeletonCard from '../components/SkeletonCard'
 import EmptyState from '../components/EmptyState'
-import MobileFilters from '../components/MobileFilters' // ✅ new
+import MobileFilters from '../components/MobileFilters'
 
 import { RECIPES } from '../lib/recipes'
 import { findMatches } from '../lib/match'
 import { getPersonalizedRecommendations } from '../lib/recommend'
 
-// ⬇️ UI imports
+// UI
 import { Card, CardContent } from "../components/card"
 
 export default function Page() {
@@ -1326,8 +1525,7 @@ export default function Page() {
     } catch {
       setRecs([])
     }
-  // ✅ include all inputs that influence recs
-  },[ingredients, diet, cuisinesSel])
+  }, [ingredients, diet, cuisinesSel]) // ✅ include all deps
 
   const results = useMemo(
     () =>
@@ -1351,7 +1549,7 @@ export default function Page() {
     })
   }, [results])
 
-  // ✅ shared renderer so mobile sheet + desktop sidebar stay in sync
+  // Shared filters
   const renderFilters = () => (
     <div className="space-y-4">
       <Filters
@@ -1369,7 +1567,7 @@ export default function Page() {
 
   return (
     <div className="space-y-8">
-      {/* === HEADER CARD (kept) === */}
+      {/* === HEADER === */}
       <Card className="shadow-lg rounded-2xl bg-gradient-to-r from-green-50 to-teal-50">
         <CardContent className="p-8 space-y-6">
           <div className="text-center space-y-2">
@@ -1377,7 +1575,7 @@ export default function Page() {
             <p className="text-gray-600">Find delicious recipes with the ingredients you already have</p>
           </div>
 
-          {/* === INGREDIENT INPUT + UPLOAD === */}
+          {/* Input + Upload */}
           <div className="flex flex-col md:flex-row gap-6 items-start md:items-center">
             <div className="flex-1 w-full">
               <IngredientPicker value={ingredients} onChange={setIngredients} />
@@ -1399,18 +1597,16 @@ export default function Page() {
             </p>
           )}
 
-          {/* === MOBILE FILTER SHEET BUTTON (new) === */}
+          {/* Mobile filters */}
           <div className="md:hidden pt-2">
             <MobileFilters renderFilters={renderFilters} />
           </div>
-
-          {/* (desktop filters move to sticky sidebar below) */}
         </CardContent>
       </Card>
 
-      {/* === CONTENT AREA: desktop sidebar + results === */}
+      {/* === MAIN CONTENT === */}
       <div className="grid md:grid-cols-[280px,1fr] gap-6">
-        {/* === DESKTOP STICKY FILTERS (new) === */}
+        {/* Sidebar filters (desktop) */}
         <aside className="hidden md:block">
           <div className="card md:sticky md:top-4 md:h-fit space-y-4">
             <h3 className="font-semibold">Filters</h3>
@@ -1418,7 +1614,7 @@ export default function Page() {
           </div>
         </aside>
 
-        {/* === RESULTS === */}
+        {/* Results */}
         <section className="space-y-3">
           <h2 className="section-title">Suggestions</h2>
 
@@ -1434,21 +1630,26 @@ export default function Page() {
             <EmptyState message="No matches yet. Try adding tomato, onion, or rice — or relax filters." />
           )}
 
+          {/* ✅ Masonry layout for suggestions */}
           {!loading && uniqueResults.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
               {uniqueResults.slice(0, 12).map((x) => (
-                <RecipeCard key={x.recipe.id} recipe={x.recipe as any} userIngredients={ingredients} />
+                <div key={x.recipe.id} style={{ breakInside: 'avoid' }} className="mb-4">
+                  <RecipeCard recipe={x.recipe as any} userIngredients={ingredients} />
+                </div>
               ))}
             </div>
           )}
 
-          {/* === PERSONALIZED RECS === */}
+          {/* ✅ Masonry layout for recommendations */}
           {recs.length > 0 && (
             <div className="space-y-3 pt-4">
               <h2 className="section-title">Recommended For You</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
                 {recs.map((r) => (
-                  <RecipeCard key={r.id} recipe={r as any} userIngredients={ingredients} />
+                  <div key={r.id} style={{ breakInside: 'avoid' }} className="mb-4">
+                    <RecipeCard recipe={r as any} userIngredients={ingredients} />
+                  </div>
                 ))}
               </div>
             </div>
@@ -1460,3 +1661,240 @@ export default function Page() {
     </div>
   )
 }
+
+
+
+
+// 'use client'
+// import React, { useEffect, useMemo, useState } from 'react'
+// import type { Recipe, Diet } from '../lib/types'
+
+// import ImageDropzone from '../components/ImageDropzone'
+// import IngredientPicker from '../components/IngredientPicker'
+// import Filters from '../components/Filters'
+// import CuisineFilter from '../components/CuisineFilter'
+// import RecipeCard from '../components/RecipeCard'
+// import FavoritesDrawer from '../components/FavoritesDrawer'
+// import SkeletonCard from '../components/SkeletonCard'
+// import EmptyState from '../components/EmptyState'
+// import MobileFilters from '../components/MobileFilters'
+
+// import { RECIPES } from '../lib/recipes'
+// import { findMatches } from '../lib/match'
+// import { getPersonalizedRecommendations } from '../lib/recommend'
+
+// // UI
+// import { Card, CardContent } from "../components/card"
+
+// export default function Page() {
+//   const [ingredients, setIngredients] = useState<string[]>([])
+//   const [diet, setDiet] = useState<Diet>('none')
+//   const [maxTime, setMaxTime] = useState<number | undefined>(30)
+//   const [difficulty, setDifficulty] = useState<Array<'easy' | 'medium' | 'hard'>>([])
+//   const [caption, setCaption] = useState('')
+//   const [recs, setRecs] = useState<Recipe[]>([])
+//   const [loading, setLoading] = useState(false)
+//   const [cuisinesSel, setCuisinesSel] = useState<string[]>([])
+
+//   // 🔎 NEW: search query
+//   const [query, setQuery] = useState('')
+
+//   const cuisinesAll = useMemo(
+//     () => Array.from(new Set(RECIPES.map(r => r.cuisine))).sort(),
+//     []
+//   )
+
+//   useEffect(() => {
+//     try {
+//       const recList = getPersonalizedRecommendations?.({
+//         diet,
+//         cuisines: cuisinesSel,
+//         userIngredients: ingredients,
+//         limit: 6,
+//       }) ?? []
+//       const uniq = Array.from(new Map(recList.map(r => [r.id, r])).values())
+//       setRecs(uniq)
+//     } catch {
+//       setRecs([])
+//     }
+//   }, [ingredients, diet, cuisinesSel])
+
+//   const results = useMemo(
+//     () =>
+//       findMatches(RECIPES, {
+//         userIngredients: ingredients,
+//         diet,
+//         maxTime,
+//         difficulty,
+//         cuisine: cuisinesSel,
+//       }),
+//     [ingredients, diet, maxTime, difficulty, cuisinesSel]
+//   )
+
+//   // de-dup results
+//   const uniqueResults = useMemo(() => {
+//     const seen = new Set<string>()
+//     return results.filter(x => {
+//       const id = x.recipe.id
+//       if (seen.has(id)) return false
+//       seen.add(id)
+//       return true
+//     })
+//   }, [results])
+
+//   // 🔎 helpers
+//   const q = query.trim().toLowerCase()
+//   const matchesQuery = (r: Recipe) => {
+//     if (!q) return true
+//     if (r.title.toLowerCase().includes(q)) return true
+//     if (r.cuisine.toLowerCase().includes(q)) return true
+//     if (r.ingredients.some(i => i.name.toLowerCase().includes(q))) return true
+//     return false
+//   }
+
+//   // 🔎 filtered lists (suggestions + recs)
+//   const filteredResults = useMemo(
+//     () => uniqueResults.filter(x => matchesQuery(x.recipe)),
+//     [uniqueResults, q]
+//   )
+//   const filteredRecs = useMemo(
+//     () => recs.filter(r => matchesQuery(r)),
+//     [recs, q]
+//   )
+
+//   // Shared filters
+//   const renderFilters = () => (
+//     <div className="space-y-4">
+//       <Filters
+//         diet={diet}
+//         setDiet={setDiet}
+//         maxTime={maxTime}
+//         setMaxTime={setMaxTime}
+//         difficulty={difficulty}
+//         setDifficulty={setDifficulty}
+//       />
+//       {/* <CuisineFilter cuisines={cuisinesAll} selected={cuisinesSel} onChange={setCuisinesSel} /> */}
+//     </div>
+//   )
+
+//   return (
+//     <div className="space-y-8">
+//       {/* === HEADER === */}
+//       <Card className="shadow-lg rounded-2xl bg-gradient-to-r from-green-50 to-teal-50">
+//         <CardContent className="p-8 space-y-6">
+//           <div className="text-center space-y-2">
+//             <h1 className="text-4xl font-bold text-gray-800">🍳 Smart Recipe Generator</h1>
+//             <p className="text-gray-600">Find delicious recipes with the ingredients you already have</p>
+//           </div>
+
+//           {/* Input + Upload */}
+//           <div className="flex flex-col md:flex-row gap-6 items-start md:items-center">
+//             <div className="flex-1 w-full">
+//               <IngredientPicker value={ingredients} onChange={setIngredients} />
+//             </div>
+//             <div className="flex-1 w-full">
+//               <ImageDropzone
+//                 onRecognize={(ings, cap) => {
+//                   setCaption(cap || '')
+//                   if (ings?.length) setIngredients([...new Set([...ingredients, ...ings])])
+//                 }}
+//                 onLoadingChange={setLoading}
+//               />
+//             </div>
+//           </div>
+
+//           {caption && (
+//             <p className="text-sm text-gray-500 italic text-center">
+//               Caption guess: “{caption}”
+//             </p>
+//           )}
+
+//           {/* Mobile filters */}
+//           <div className="md:hidden pt-2">
+//             <MobileFilters renderFilters={renderFilters} />
+//           </div>
+//         </CardContent>
+//       </Card>
+
+//       {/* === MAIN CONTENT === */}
+//       <div className="grid md:grid-cols-[280px,1fr] gap-6">
+//         {/* Sidebar filters (desktop) */}
+//         <aside className="hidden md:block">
+//           <div className="card md:sticky md:top-4 md:h-fit space-y-4">
+//             <h3 className="font-semibold">Filters</h3>
+//             {renderFilters()}
+//           </div>
+//         </aside>
+
+//         {/* Results */}
+//         <section className="space-y-6">
+//          {/* 🔎 Search bar */}
+// <div className="w-full flex items-center gap-3 mb-4">
+//   <input
+//     type="text"
+//     className="flex-1 px-4 py-2 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400"
+//     placeholder="🔎 Search recipes by title, cuisine, or ingredient..."
+//     value={query}
+//     onChange={(e) => setQuery(e.target.value)}
+//   />
+//   {q && (
+//     <button
+//       className="px-4 py-2 rounded-full bg-red-500 text-white hover:bg-red-600 transition"
+//       onClick={() => setQuery('')}
+//     >
+//       Clear
+//     </button>
+//   )}
+// </div>
+
+
+//           {/* Suggestions */}
+//           <div className="space-y-3">
+//             <h2 className="section-title">Suggestions</h2>
+
+//             {loading && (
+//               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+//                 {Array.from({ length: 6 }).map((_, i) => (
+//                   <SkeletonCard key={i} />
+//                 ))}
+//               </div>
+//             )}
+
+//             {!loading && filteredResults.length === 0 && (
+//               <EmptyState message={q
+//                 ? `No results for “${query}”. Try a different keyword.`
+//                 : "No matches yet. Try adding tomato, onion, or rice — or relax filters."}
+//               />
+//             )}
+
+//             {!loading && filteredResults.length > 0 && (
+//               <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
+//                 {filteredResults.slice(0, 12).map((x) => (
+//                   <div key={x.recipe.id} style={{ breakInside: 'avoid' }} className="mb-4">
+//                     <RecipeCard recipe={x.recipe as any} userIngredients={ingredients} />
+//                   </div>
+//                 ))}
+//               </div>
+//             )}
+//           </div>
+
+//           {/* Recommended */}
+//           {filteredRecs.length > 0 && (
+//             <div className="space-y-3">
+//               <h2 className="section-title">Recommended For You</h2>
+//               <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
+//                 {filteredRecs.map((r) => (
+//                   <div key={r.id} style={{ breakInside: 'avoid' }} className="mb-4">
+//                     <RecipeCard recipe={r as any} userIngredients={ingredients} />
+//                   </div>
+//                 ))}
+//               </div>
+//             </div>
+//           )}
+//         </section>
+//       </div>
+
+//       <FavoritesDrawer />
+//     </div>
+//   )
+// }
