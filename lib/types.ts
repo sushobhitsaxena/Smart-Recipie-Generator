@@ -8,17 +8,17 @@ export interface Nutrition {
   fat: number     // g
 }
 
-export interface Recipe {
+export type Recipe = {
   id: string
   title: string
   cuisine: string
   ingredients: { name: string; quantity: string }[]
   steps: string[]
   timeMinutes: number
-  difficulty: Difficulty
-  dietTags: Diet[]
+  difficulty: 'easy' | 'medium' | 'hard'
+  dietTags: string[]
   servings: number
-  nutritionPerServing: Nutrition
+  nutritionPerServing: { calories: number; protein: number; carbs: number; fat: number }
 }
 
 export interface Rating {

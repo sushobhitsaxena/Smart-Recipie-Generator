@@ -1,63 +1,302 @@
+// 'use client'
+// import React, { useState } from 'react'
+
+
+
+// export default function IngredientPicker({
+//   value,
+//   onChange,
+// }: {
+//   value: string[]
+//   onChange: (v: string[]) => void
+// }) {
+//   const [text, setText] = useState('')
+
+//   function add(token: string) {
+//     const v = token.toLowerCase().trim()
+//     if (!v) return
+//     if (!value.includes(v)) onChange([...value, v])
+//     setText('')
+//   }
+//   function remove(token: string) {
+//     onChange(value.filter((x) => x !== token))
+//   }
+
+//   return (
+//     <div>
+//       <label className="text-sm font-medium">Ingredients you have</label>
+//       <div className="flex gap-2 mt-2">
+//         <input
+//           value={text}
+//           onChange={(e) => setText(e.target.value)}
+//           onKeyDown={(e) => {
+//             if (e.key === 'Enter') add(text)
+//           }}
+//           placeholder="e.g., tomato, onion, rice"
+//           className="flex-1 bg-transparent border rounded-xl px-3 py-2"
+//         />
+//         <button
+//           onClick={() => add(text)}
+//           className="px-3 py-2 rounded-xl border bg-white/10"
+//         >
+//           Add
+//         </button>
+//       </div>
+
+//       <div className="flex flex-wrap gap-2 mt-3">
+//         {value.map((tok) => (
+//           <span key={tok} className="chip chip--accent">
+//   {tok}
+//   <button className="opacity-80 hover:opacity-100" onClick={() => remove(tok)} aria-label={`remove ${tok}`}>
+//     ✕
+//   </button>
+// </span>
+
+//         ))}
+//       </div>
+//     </div>
+//   )
+// }
+
+
+// // 'use client'
+// // import React, { useMemo, useRef, useState } from 'react'
+// // import { COMMON_INGREDIENTS } from 'lib/ingredients'
+
+// // export default function IngredientPicker({
+// //   value,
+// //   onChange,
+// // }: {
+// //   value: string[]
+// //   onChange: (v: string[]) => void
+// // }) {
+// //   const [text, setText] = useState('')
+// //   const [open, setOpen] = useState(false)
+// //   const inputRef = useRef<HTMLInputElement>(null)
+
+// //   // filter suggestions
+// //   const suggestions = useMemo(() => {
+// //     const q = text.trim().toLowerCase()
+// //     if (!q) return COMMON_INGREDIENTS.filter(x => !value.includes(x)).slice(0, 15)
+// //     return COMMON_INGREDIENTS
+// //       .filter(x => !value.includes(x) && x.toLowerCase().includes(q))
+// //       .slice(0, 15)
+// //   }, [text, value])
+
+// //   function add(token: string) {
+// //     const v = token.toLowerCase().trim()
+// //     if (!v) return
+// //     if (!value.includes(v)) onChange([...value, v])
+// //     setText('')
+// //     setOpen(false)
+// //     inputRef.current?.focus()
+// //   }
+
+// //   function remove(token: string) {
+// //     onChange(value.filter(x => x !== token))
+// //   }
+
+// //   return (
+// //     <div className="space-y-2 relative">
+// //       <label className="text-sm font-medium">Ingredients you have</label>
+
+// //       <div className="flex gap-2">
+// //         <input
+// //           ref={inputRef}
+// //           value={text}
+// //           onChange={(e) => { setText(e.target.value); setOpen(true) }}
+// //           onKeyDown={(e) => { if (e.key === 'Enter') add(text) }}
+// //           onFocus={() => setOpen(true)}
+// //           placeholder="e.g., tomato, onion, rice"
+// //           className="input"
+// //         />
+// //         <button onClick={() => add(text)} className="btn-primary">
+// //           Add
+// //         </button>
+// //       </div>
+
+// //       {/* selected ingredients */}
+// //       {value.length > 0 && (
+// //         <div className="flex flex-wrap gap-2">
+// //           {value.map(tok => (
+// //             <span key={tok} className="chip chip--accent">
+// //               {tok}
+// //               <button
+// //                 className="opacity-80 hover:opacity-100"
+// //                 onClick={() => remove(tok)}
+// //                 aria-label={`remove ${tok}`}
+// //               >
+// //                 ✕
+// //               </button>
+// //             </span>
+// //           ))}
+// //         </div>
+// //       )}
+
+// //       {/* suggestions dropdown */}
+// //       {open && suggestions.length > 0 && (
+// //         <div className="absolute z-10 mt-1 w-full card p-2 max-h-48 overflow-auto">
+// //           <div className="text-xs subtle px-2 pb-1">Pick from list</div>
+// //           {suggestions.map(s => (
+// //             <button
+// //               key={s}
+// //               onClick={() => add(s)}
+// //               className="block w-full text-left btn mt-1"
+// //             >
+// //               {s}
+// //             </button>
+// //           ))}
+// //         </div>
+// //       )}
+// //     </div>
+// //   )
+// // }
+
+
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
+
+/** Built-in master list so there’s no import/path issue */
+const COMMON_INGREDIENTS: string[] = [
+  'tomato','onion','garlic','ginger','potato','green chilli','lemon',
+  'spinach','carrot','peas','capsicum','cucumber','broccoli','mushroom',
+  'paneer','tofu','egg','chicken','fish','prawns',
+  'rice','basmati rice','poha','oats','pasta','noodles',
+  'wheat flour','all-purpose flour','bread',
+  'lentils','chickpeas','rajma','moong dal','urad dal',
+  'milk','curd','yogurt','cream','butter','ghee','cheese',
+  'coriander','cumin','turmeric','garam masala','chilli powder',
+  'salt','sugar','oil','olive oil'
+]
 
 export default function IngredientPicker({
   value,
   onChange,
+  placeholder = 'e.g., tomato, onion, rice',
 }: {
   value: string[]
-  onChange: (v: string[]) => void
+  onChange: (next: string[]) => void
+  placeholder?: string
 }) {
   const [text, setText] = useState('')
+  const [open, setOpen] = useState(false)
+  const [hi, setHi] = useState(0) // highlighted index for keyboard nav
+  const boxRef = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  // Filter suggestions
+  const suggestions = useMemo(() => {
+    const q = text.trim().toLowerCase()
+    const pool = COMMON_INGREDIENTS.filter(x => !value.includes(x))
+    if (!q) return pool.slice(0, 20)
+    return pool.filter(x => x.toLowerCase().includes(q)).slice(0, 20)
+  }, [text, value])
 
   function add(token: string) {
     const v = token.toLowerCase().trim()
     if (!v) return
     if (!value.includes(v)) onChange([...value, v])
     setText('')
+    setOpen(false)
+    setHi(0)
+    inputRef.current?.focus()
   }
-  function remove(token: string) {
-    onChange(value.filter((x) => x !== token))
+  function remove(tok: string) {
+    onChange(value.filter(x => x !== tok))
+  }
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function onDocClick(e: MouseEvent) {
+      if (!boxRef.current) return
+      if (!boxRef.current.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener('mousedown', onDocClick)
+    return () => document.removeEventListener('mousedown', onDocClick)
+  }, [])
+
+  function onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (!open && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
+      setOpen(true)
+      return
+    }
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      if (open && suggestions[hi]) add(suggestions[hi])
+      else add(text)
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      setHi((i) => Math.min(i + 1, Math.max(0, suggestions.length - 1)))
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      setHi((i) => Math.max(i - 1, 0))
+    } else if (e.key === 'Escape') {
+      setOpen(false)
+    }
   }
 
   return (
-    <div>
+    <div className="space-y-2" ref={boxRef}>
       <label className="text-sm font-medium">Ingredients you have</label>
-      <div className="flex gap-2 mt-2">
+
+      <div className="flex gap-2">
         <input
+          ref={inputRef}
           value={text}
-          onChange={(e) => setText(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') add(text)
-          }}
-          placeholder="e.g., tomato, onion, rice"
-          className="flex-1 bg-transparent border rounded-xl px-3 py-2"
+          onChange={(e) => { setText(e.target.value); setOpen(true); setHi(0) }}
+          onKeyDown={onKeyDown}
+          onFocus={() => setOpen(true)}
+          placeholder={placeholder}
+          className="input"
+          aria-autocomplete="list"
+          aria-expanded={open}
         />
-        <button
-          onClick={() => add(text)}
-          className="px-3 py-2 rounded-xl border bg-white/10"
-        >
-          Add
-        </button>
+        <button className="btn-primary" onClick={() => add(text)}>Add</button>
       </div>
 
-      <div className="flex flex-wrap gap-2 mt-3">
-        {value.map((tok) => (
-          <span
-            key={tok}
-            className="px-2 py-1 rounded-full bg-white/10 text-xs flex items-center gap-2"
-          >
-            {tok}
+      {/* Selected chips */}
+      {value.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {value.map(tok => (
+            <span key={tok} className="chip chip--accent">
+              {tok}
+              <button
+                className="opacity-80 hover:opacity-100"
+                onClick={() => remove(tok)}
+                aria-label={`remove ${tok}`}
+              >
+                ✕
+              </button>
+            </span>
+          ))}
+        </div>
+      )}
+
+      {/* Suggestions dropdown */}
+      {open && suggestions.length > 0 && (
+        <div
+          className="card mt-2 p-1 max-h-56 overflow-auto z-20"
+          role="listbox"
+        >
+          <div className="text-xs subtle px-2 py-1">Pick from list</div>
+          {suggestions.map((s, i) => (
             <button
-              className="opacity-70 hover:opacity-100"
-              onClick={() => remove(tok)}
-              aria-label={`remove ${tok}`}
+              key={s}
+              role="option"
+              aria-selected={i === hi}
+              onMouseEnter={() => setHi(i)}
+              onClick={() => add(s)}
+              className={
+                'w-full text-left btn mt-1 ' +
+                (i === hi ? 'bg-white/10' : '')
+              }
             >
-              ✕
+              {s}
             </button>
-          </span>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
+

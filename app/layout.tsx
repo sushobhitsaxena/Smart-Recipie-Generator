@@ -34,21 +34,53 @@
 // }
 
 // app/layout.tsx
-import "./globals.css";
-import type { Metadata } from "next";
+// import "./globals.css";
+// import type { Metadata } from "next";
+
+// export const metadata: Metadata = {
+//   title: "Smart Recipe Generator",
+//   description: "Suggest recipes from your ingredients",
+// };
+
+// export default function RootLayout({ children }: { children: React.ReactNode }) {
+//   return (
+//     <html lang="en">
+//       <body className="bg-neutral-900 text-neutral-100 min-h-dvh">
+//         <div className="max-w-5xl mx-auto p-4">{children}</div>
+//       </body>
+//     </html>
+//   );
+// }
+// app/layout.tsx
+import './globals.css'
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import ThemeToggle from '@/components/ThemeToggle'
+
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: "Smart Recipe Generator",
-  description: "Suggest recipes from your ingredients",
-};
+  title: 'Smart Recipe Generator',
+  description: 'Suggest recipes from your ingredients',
+}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="bg-neutral-900 text-neutral-100 min-h-dvh">
-        <div className="max-w-5xl mx-auto p-4">{children}</div>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.className} min-h-dvh bg-bg text-fg antialiased`}>
+        <header className="sticky top-0 z-50 bg-bg/80 backdrop-blur border-b border-[--color-border]">
+          <div className="mx-auto max-w-5xl px-4 py-3 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <span className="text-lg font-semibold">🍳 Smart Recipe</span>
+              <span className="badge">beta</span>
+            </div>
+            <ThemeToggle />
+          </div>
+        </header>
+        <main className="mx-auto max-w-5xl p-4">{children}</main>
       </body>
     </html>
-  );
+  )
 }
+
 
