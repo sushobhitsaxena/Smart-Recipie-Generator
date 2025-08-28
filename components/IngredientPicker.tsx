@@ -157,17 +157,61 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 
 /** Built-in master list so there’s no import/path issue */
+// const COMMON_INGREDIENTS: string[] = [
+//   'tomato','onion','garlic','ginger','potato','green chilli','lemon',
+//   'spinach','carrot','peas','capsicum','cucumber','broccoli','mushroom',
+//   'paneer','tofu','egg','chicken','fish','prawns',
+//   'rice','basmati rice','poha','oats','pasta','noodles',
+//   'wheat flour','all-purpose flour','bread',
+//   'lentils','chickpeas','rajma','moong dal','urad dal',
+//   'milk','curd','yogurt','cream','butter','ghee','cheese',
+//   'coriander','cumin','turmeric','garam masala','chilli powder',
+//   'salt','sugar','oil','olive oil'
+// ]
+
+
 const COMMON_INGREDIENTS: string[] = [
+  // Vegetables
   'tomato','onion','garlic','ginger','potato','green chilli','lemon',
   'spinach','carrot','peas','capsicum','cucumber','broccoli','mushroom',
-  'paneer','tofu','egg','chicken','fish','prawns',
-  'rice','basmati rice','poha','oats','pasta','noodles',
-  'wheat flour','all-purpose flour','bread',
-  'lentils','chickpeas','rajma','moong dal','urad dal',
-  'milk','curd','yogurt','cream','butter','ghee','cheese',
+  'cauliflower','cabbage','beetroot','bitter gourd','ridge gourd','bottle gourd',
+  'brinjal','okra','drumstick','pumpkin','sweet potato','radish',
+  'fenugreek leaves','coriander leaves','mint leaves','spring onion',
+
+  // Proteins
+  'paneer','tofu','egg','chicken','fish','prawns','mutton','beef','pork','soya chunks',
+
+  // Grains, Pulses & Cereals
+  'rice','basmati rice','brown rice','poha','oats','pasta','noodles',
+  'wheat flour','all-purpose flour','bread','corn flour','semolina','millets',
+  'quinoa','barley','buckwheat',
+  'lentils','chickpeas','rajma','moong dal','urad dal','toor dal','masoor dal','green gram',
+
+  // Dairy & Fats
+  'milk','curd','yogurt','cream','butter','ghee','cheese','buttermilk','paneer','evaporated milk',
+
+  // Oils
+  'oil','olive oil','mustard oil','coconut oil','sunflower oil','sesame oil','groundnut oil',
+
+  // Spices & Condiments
   'coriander','cumin','turmeric','garam masala','chilli powder',
-  'salt','sugar','oil','olive oil'
-]
+  'black pepper','cloves','cardamom','cinnamon','bay leaf','nutmeg','mace','fenugreek seeds',
+  'fennel seeds','asafoetida','mustard seeds','curry leaves','dry red chilli','kasuri methi',
+
+  // Basic Seasonings
+  'salt','sugar','jaggery','honey','vinegar','soy sauce','tomato ketchup','green chutney',
+  'tamarind','amchur','lemon juice','pickle',
+
+  // Fruits
+  'banana','apple','orange','mango','grapes','papaya','pineapple','watermelon',
+  'pomegranate','guava','strawberry','blueberry','kiwi','pear','peach','plum',
+
+  // Nuts & Seeds
+  'almonds','cashews','walnuts','peanuts','pistachios','chia seeds','flax seeds','sesame seeds','sunflower seeds',
+
+  // Others
+  'tea leaves','coffee','cocoa powder','corn','green beans','lettuce'
+];
 
 export default function IngredientPicker({
   value,

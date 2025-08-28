@@ -1476,198 +1476,11 @@
 // }
 
 
-'use client'
-import React, { useEffect, useMemo, useState } from 'react'
-import type { Recipe, Diet } from '../lib/types'
-
-import ImageDropzone from '../components/ImageDropzone'
-import IngredientPicker from '../components/IngredientPicker'
-import Filters from '../components/Filters'
-import CuisineFilter from '../components/CuisineFilter'
-import RecipeCard from '../components/RecipeCard'
-import FavoritesDrawer from '../components/FavoritesDrawer'
-import SkeletonCard from '../components/SkeletonCard'
-import EmptyState from '../components/EmptyState'
-import MobileFilters from '../components/MobileFilters'
-
-import { RECIPES } from '../lib/recipes'
-import { findMatches } from '../lib/match'
-import { getPersonalizedRecommendations } from '../lib/recommend'
-
-// UI
-import { Card, CardContent } from "../components/card"
-
-export default function Page() {
-  const [ingredients, setIngredients] = useState<string[]>([])
-  const [diet, setDiet] = useState<Diet>('none')
-  const [maxTime, setMaxTime] = useState<number | undefined>(30)
-  const [difficulty, setDifficulty] = useState<Array<'easy' | 'medium' | 'hard'>>([])
-  const [caption, setCaption] = useState('')
-  const [recs, setRecs] = useState<Recipe[]>([])
-  const [loading, setLoading] = useState(false)
-  const [cuisinesSel, setCuisinesSel] = useState<string[]>([])
-
-  const cuisinesAll = useMemo(
-    () => Array.from(new Set(RECIPES.map(r => r.cuisine))).sort(),
-    []
-  )
-
-  useEffect(() => {
-    try {
-      const recList = getPersonalizedRecommendations?.({
-        diet,
-        cuisines: cuisinesSel,
-        userIngredients: ingredients,
-        limit: 6,
-      }) ?? []
-      const uniq = Array.from(new Map(recList.map(r => [r.id, r])).values())
-      setRecs(uniq)
-    } catch {
-      setRecs([])
-    }
-  }, [ingredients, diet, cuisinesSel]) // ✅ include all deps
-
-  const results = useMemo(
-    () =>
-      findMatches(RECIPES, {
-        userIngredients: ingredients,
-        diet,
-        maxTime,
-        difficulty,
-        cuisine: cuisinesSel,
-      }),
-    [ingredients, diet, maxTime, difficulty, cuisinesSel]
-  )
-
-  const uniqueResults = useMemo(() => {
-    const seen = new Set<string>()
-    return results.filter(x => {
-      const id = x.recipe.id
-      if (seen.has(id)) return false
-      seen.add(id)
-      return true
-    })
-  }, [results])
-
-  // Shared filters
-  const renderFilters = () => (
-    <div className="space-y-4">
-      <Filters
-        diet={diet}
-        setDiet={setDiet}
-        maxTime={maxTime}
-        setMaxTime={setMaxTime}
-        difficulty={difficulty}
-        setDifficulty={setDifficulty}
-      />
-      {/* Optional cuisine filter */}
-      {/* <CuisineFilter cuisines={cuisinesAll} selected={cuisinesSel} onChange={setCuisinesSel} /> */}
-    </div>
-  )
-
-  return (
-    <div className="space-y-8">
-      {/* === HEADER === */}
-      <Card className="shadow-lg rounded-2xl bg-gradient-to-r from-green-50 to-teal-50">
-        <CardContent className="p-8 space-y-6">
-          <div className="text-center space-y-2">
-            <h1 className="text-4xl font-bold text-gray-800">🍳 Smart Recipe Generator</h1>
-            <p className="text-gray-600">Find delicious recipes with the ingredients you already have</p>
-          </div>
-
-          {/* Input + Upload */}
-          <div className="flex flex-col md:flex-row gap-6 items-start md:items-center">
-            <div className="flex-1 w-full">
-              <IngredientPicker value={ingredients} onChange={setIngredients} />
-            </div>
-            <div className="flex-1 w-full">
-              <ImageDropzone
-                onRecognize={(ings, cap) => {
-                  setCaption(cap || '')
-                  if (ings?.length) setIngredients([...new Set([...ingredients, ...ings])])
-                }}
-                onLoadingChange={setLoading}
-              />
-            </div>
-          </div>
-
-          {caption && (
-            <p className="text-sm text-gray-500 italic text-center">
-              Caption guess: “{caption}”
-            </p>
-          )}
-
-          {/* Mobile filters */}
-          <div className="md:hidden pt-2">
-            <MobileFilters renderFilters={renderFilters} />
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* === MAIN CONTENT === */}
-      <div className="grid md:grid-cols-[280px,1fr] gap-6">
-        {/* Sidebar filters (desktop) */}
-        <aside className="hidden md:block">
-          <div className="card md:sticky md:top-4 md:h-fit space-y-4">
-            <h3 className="font-semibold">Filters</h3>
-            {renderFilters()}
-          </div>
-        </aside>
-
-        {/* Results */}
-        <section className="space-y-3">
-          <h2 className="section-title">Suggestions</h2>
-
-          {loading && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <SkeletonCard key={i} />
-              ))}
-            </div>
-          )}
-
-          {!loading && uniqueResults.length === 0 && (
-            <EmptyState message="No matches yet. Try adding tomato, onion, or rice — or relax filters." />
-          )}
-
-          {/* ✅ Masonry layout for suggestions */}
-          {!loading && uniqueResults.length > 0 && (
-            <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
-              {uniqueResults.slice(0, 12).map((x) => (
-                <div key={x.recipe.id} style={{ breakInside: 'avoid' }} className="mb-4">
-                  <RecipeCard recipe={x.recipe as any} userIngredients={ingredients} />
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* ✅ Masonry layout for recommendations */}
-          {recs.length > 0 && (
-            <div className="space-y-3 pt-4">
-              <h2 className="section-title">Recommended For You</h2>
-              <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
-                {recs.map((r) => (
-                  <div key={r.id} style={{ breakInside: 'avoid' }} className="mb-4">
-                    <RecipeCard recipe={r as any} userIngredients={ingredients} />
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </section>
-      </div>
-
-      <FavoritesDrawer />
-    </div>
-  )
-}
-
-
-
-
 // 'use client'
 // import React, { useEffect, useMemo, useState } from 'react'
 // import type { Recipe, Diet } from '../lib/types'
+// import { RECIPES } from '../lib/recipes'
+// import { findMatches } from '../lib/match'
 
 // import ImageDropzone from '../components/ImageDropzone'
 // import IngredientPicker from '../components/IngredientPicker'
@@ -1679,8 +1492,7 @@ export default function Page() {
 // import EmptyState from '../components/EmptyState'
 // import MobileFilters from '../components/MobileFilters'
 
-// import { RECIPES } from '../lib/recipes'
-// import { findMatches } from '../lib/match'
+
 // import { getPersonalizedRecommendations } from '../lib/recommend'
 
 // // UI
@@ -1695,9 +1507,6 @@ export default function Page() {
 //   const [recs, setRecs] = useState<Recipe[]>([])
 //   const [loading, setLoading] = useState(false)
 //   const [cuisinesSel, setCuisinesSel] = useState<string[]>([])
-
-//   // 🔎 NEW: search query
-//   const [query, setQuery] = useState('')
 
 //   const cuisinesAll = useMemo(
 //     () => Array.from(new Set(RECIPES.map(r => r.cuisine))).sort(),
@@ -1717,7 +1526,7 @@ export default function Page() {
 //     } catch {
 //       setRecs([])
 //     }
-//   }, [ingredients, diet, cuisinesSel])
+//   }, [ingredients, diet, cuisinesSel]) // ✅ include all deps
 
 //   const results = useMemo(
 //     () =>
@@ -1730,8 +1539,8 @@ export default function Page() {
 //       }),
 //     [ingredients, diet, maxTime, difficulty, cuisinesSel]
 //   )
+  
 
-//   // de-dup results
 //   const uniqueResults = useMemo(() => {
 //     const seen = new Set<string>()
 //     return results.filter(x => {
@@ -1741,26 +1550,6 @@ export default function Page() {
 //       return true
 //     })
 //   }, [results])
-
-//   // 🔎 helpers
-//   const q = query.trim().toLowerCase()
-//   const matchesQuery = (r: Recipe) => {
-//     if (!q) return true
-//     if (r.title.toLowerCase().includes(q)) return true
-//     if (r.cuisine.toLowerCase().includes(q)) return true
-//     if (r.ingredients.some(i => i.name.toLowerCase().includes(q))) return true
-//     return false
-//   }
-
-//   // 🔎 filtered lists (suggestions + recs)
-//   const filteredResults = useMemo(
-//     () => uniqueResults.filter(x => matchesQuery(x.recipe)),
-//     [uniqueResults, q]
-//   )
-//   const filteredRecs = useMemo(
-//     () => recs.filter(r => matchesQuery(r)),
-//     [recs, q]
-//   )
 
 //   // Shared filters
 //   const renderFilters = () => (
@@ -1773,6 +1562,7 @@ export default function Page() {
 //         difficulty={difficulty}
 //         setDifficulty={setDifficulty}
 //       />
+//       {/* Optional cuisine filter */}
 //       {/* <CuisineFilter cuisines={cuisinesAll} selected={cuisinesSel} onChange={setCuisinesSel} /> */}
 //     </div>
 //   )
@@ -1827,63 +1617,38 @@ export default function Page() {
 //         </aside>
 
 //         {/* Results */}
-//         <section className="space-y-6">
-//          {/* 🔎 Search bar */}
-// <div className="w-full flex items-center gap-3 mb-4">
-//   <input
-//     type="text"
-//     className="flex-1 px-4 py-2 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400"
-//     placeholder="🔎 Search recipes by title, cuisine, or ingredient..."
-//     value={query}
-//     onChange={(e) => setQuery(e.target.value)}
-//   />
-//   {q && (
-//     <button
-//       className="px-4 py-2 rounded-full bg-red-500 text-white hover:bg-red-600 transition"
-//       onClick={() => setQuery('')}
-//     >
-//       Clear
-//     </button>
-//   )}
-// </div>
+//         <section className="space-y-3">
+//           <h2 className="section-title">Suggestions</h2>
 
+//           {loading && (
+//             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+//               {Array.from({ length: 6 }).map((_, i) => (
+//                 <SkeletonCard key={i} />
+//               ))}
+//             </div>
+//           )}
 
-//           {/* Suggestions */}
-//           <div className="space-y-3">
-//             <h2 className="section-title">Suggestions</h2>
+//           {!loading && uniqueResults.length === 0 && (
+//             <EmptyState message="No matches yet. Try adding tomato, onion, or rice — or relax filters." />
+//           )}
 
-//             {loading && (
-//               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-//                 {Array.from({ length: 6 }).map((_, i) => (
-//                   <SkeletonCard key={i} />
-//                 ))}
-//               </div>
-//             )}
+//           {/* ✅ Masonry layout for suggestions */}
+//           {!loading && uniqueResults.length > 0 && (
+//             <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
+//               {uniqueResults.slice(0, 12).map((x) => (
+//                 <div key={x.recipe.id} style={{ breakInside: 'avoid' }} className="mb-4">
+//                   <RecipeCard recipe={x.recipe as any} userIngredients={ingredients} />
+//                 </div>
+//               ))}
+//             </div>
+//           )}
 
-//             {!loading && filteredResults.length === 0 && (
-//               <EmptyState message={q
-//                 ? `No results for “${query}”. Try a different keyword.`
-//                 : "No matches yet. Try adding tomato, onion, or rice — or relax filters."}
-//               />
-//             )}
-
-//             {!loading && filteredResults.length > 0 && (
-//               <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
-//                 {filteredResults.slice(0, 12).map((x) => (
-//                   <div key={x.recipe.id} style={{ breakInside: 'avoid' }} className="mb-4">
-//                     <RecipeCard recipe={x.recipe as any} userIngredients={ingredients} />
-//                   </div>
-//                 ))}
-//               </div>
-//             )}
-//           </div>
-
-//           {/* Recommended */}
-//           {filteredRecs.length > 0 && (
-//             <div className="space-y-3">
+//           {/* ✅ Masonry layout for recommendations */}
+//           {recs.length > 0 && (
+//             <div className="space-y-3 pt-4">
 //               <h2 className="section-title">Recommended For You</h2>
 //               <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
-//                 {filteredRecs.map((r) => (
+//                 {recs.map((r) => (
 //                   <div key={r.id} style={{ breakInside: 'avoid' }} className="mb-4">
 //                     <RecipeCard recipe={r as any} userIngredients={ingredients} />
 //                   </div>
@@ -1898,3 +1663,411 @@ export default function Page() {
 //     </div>
 //   )
 // }
+
+
+
+
+
+
+
+
+// 'use client'
+// import React, { useEffect, useMemo, useState } from 'react'
+// import type { Recipe, Diet } from '../lib/types'
+// import { RECIPES } from '../lib/recipes'
+// import { findMatches, matchesRecipeSearch } from '../lib/match'
+
+// import ImageDropzone from '../components/ImageDropzone'
+// import IngredientPicker from '../components/IngredientPicker'
+// import Filters from '../components/Filters'
+// import CuisineFilter from '../components/CuisineFilter'
+// import RecipeCard from '../components/RecipeCard'
+// import FavoritesDrawer from '../components/FavoritesDrawer'
+// import SkeletonCard from '../components/SkeletonCard'
+// import EmptyState from '../components/EmptyState'
+// import MobileFilters from '../components/MobileFilters'
+// import SearchBar from '../components/SearchBar'
+
+// import { getPersonalizedRecommendations } from '../lib/recommend'
+
+// // UI
+// import { Card, CardContent } from "../components/card"
+
+// export default function Page() {
+//   const [ingredients, setIngredients] = useState<string[]>([])
+//   const [diet, setDiet] = useState<Diet>('none')
+//   const [maxTime, setMaxTime] = useState<number | undefined>(30)
+//   const [difficulty, setDifficulty] = useState<Array<'easy' | 'medium' | 'hard'>>([])
+//   const [caption, setCaption] = useState('')
+//   const [recs, setRecs] = useState<Recipe[]>([])
+//   const [loading, setLoading] = useState(false)
+//   const [cuisinesSel, setCuisinesSel] = useState<string[]>([])
+//   const [query, setQuery] = useState('') // 🔎 search state
+
+//   const cuisinesAll = useMemo(
+//     () => Array.from(new Set(RECIPES.map(r => r.cuisine))).sort(),
+//     []
+//   )
+
+//   useEffect(() => {
+//     try {
+//       const recList = getPersonalizedRecommendations?.({
+//         diet,
+//         cuisines: cuisinesSel,
+//         userIngredients: ingredients,
+//         limit: 6,
+//       }) ?? []
+//       const uniq = Array.from(new Map(recList.map(r => [r.id, r])).values())
+//       setRecs(uniq)
+//     } catch {
+//       setRecs([])
+//     }
+//   }, [ingredients, diet, cuisinesSel])
+
+//   const results = useMemo(
+//     () =>
+//       findMatches(RECIPES, {
+//         userIngredients: ingredients,
+//         diet,
+//         maxTime,
+//         difficulty,
+//         cuisine: cuisinesSel,
+//       }),
+//     [ingredients, diet, maxTime, difficulty, cuisinesSel]
+//   )
+
+//   const uniqueResults = useMemo(() => {
+//     const seen = new Set<string>()
+//     return results.filter(x => {
+//       const id = x.recipe.id
+//       if (seen.has(id)) return false
+//       seen.add(id)
+//       return true
+//     })
+//   }, [results])
+
+//   // 🔎 Apply text search after all other filters
+//   const searchedResults = useMemo(() => {
+//     return uniqueResults.filter((x) => matchesRecipeSearch(x.recipe as any, query))
+//   }, [uniqueResults, query])
+
+//   // Shared filters
+//   const renderFilters = () => (
+//     <div className="space-y-4">
+//       <Filters
+//         diet={diet}
+//         setDiet={setDiet}
+//         maxTime={maxTime}
+//         setMaxTime={setMaxTime}
+//         difficulty={difficulty}
+//         setDifficulty={setDifficulty}
+//       />
+//       {/* Optional cuisine filter */}
+//       {/* <CuisineFilter cuisines={cuisinesAll} selected={cuisinesSel} onChange={setCuisinesSel} /> */}
+//     </div>
+//   )
+
+//   return (
+//     <div className="space-y-8">
+//       {/* === HEADER === */}
+//       <Card className="shadow-lg rounded-2xl bg-gradient-to-r from-green-50 to-teal-50">
+//         <CardContent className="p-8 space-y-6">
+//           <div className="text-center space-y-2">
+//             <h1 className="text-4xl font-bold text-gray-800">🍳 Smart Recipe Generator</h1>
+//             <p className="text-gray-600">Find delicious recipes with the ingredients you already have</p>
+//           </div>
+
+//           {/* Input + Upload */}
+//           <div className="flex flex-col md:flex-row gap-6 items-start md:items-center">
+//             <div className="flex-1 w-full">
+//               <IngredientPicker value={ingredients} onChange={setIngredients} />
+//             </div>
+//             <div className="flex-1 w-full">
+//               <ImageDropzone
+//                 onRecognize={(ings, cap) => {
+//                   setCaption(cap || '')
+//                   if (ings?.length) setIngredients([...new Set([...ingredients, ...ings])])
+//                 }}
+//                 onLoadingChange={setLoading}
+//               />
+//             </div>
+//           </div>
+
+//           {caption && (
+//             <p className="text-sm text-gray-500 italic text-center">
+//               Caption guess: “{caption}”
+//             </p>
+//           )}
+
+//           {/* Mobile filters */}
+//           <div className="md:hidden pt-2">
+//             <MobileFilters renderFilters={renderFilters} />
+//           </div>
+//         </CardContent>
+//       </Card>
+
+//       {/* === MAIN CONTENT === */}
+//       <div className="grid md:grid-cols-[280px,1fr] gap-6">
+//         {/* Sidebar filters (desktop) */}
+//         <aside className="hidden md:block">
+//           <div className="card md:sticky md:top-4 md:h-fit space-y-4">
+//             <h3 className="font-semibold">Filters</h3>
+//             {renderFilters()}
+//           </div>
+//         </aside>
+
+//         {/* Results */}
+//         <section className="space-y-3">
+//           <div className="flex items-center justify-between gap-4">
+//             <h2 className="section-title">Suggestions</h2>
+//             <SearchBar value={query} onChange={setQuery} />
+//           </div>
+
+//           {loading && (
+//             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+//               {Array.from({ length: 6 }).map((_, i) => (
+//                 <SkeletonCard key={i} />
+//               ))}
+//             </div>
+//           )}
+
+//           {!loading && searchedResults.length === 0 && (
+//             <EmptyState message={`No recipes match “${query}”. Try another search or relax filters.`} />
+//           )}
+
+//           {/* ✅ Masonry layout for suggestions */}
+//           {!loading && searchedResults.length > 0 && (
+//             <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
+//               {searchedResults.slice(0, 12).map((x) => (
+//                 <div key={x.recipe.id} style={{ breakInside: 'avoid' }} className="mb-4">
+//                   <RecipeCard recipe={x.recipe as any} userIngredients={ingredients} />
+//                 </div>
+//               ))}
+//             </div>
+//           )}
+
+//           {/* ✅ Masonry layout for recommendations */}
+//           {recs.length > 0 && (
+//             <div className="space-y-3 pt-4">
+//               <h2 className="section-title">Recommended For You</h2>
+//               <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
+//                 {recs.map((r) => (
+//                   <div key={r.id} style={{ breakInside: 'avoid' }} className="mb-4">
+//                     <RecipeCard recipe={r as any} userIngredients={ingredients} />
+//                   </div>
+//                 ))}
+//               </div>
+//             </div>
+//           )}
+//         </section>
+//       </div>
+
+//       <FavoritesDrawer />
+//     </div>
+//   )
+// }
+
+
+
+'use client'
+import React, { useEffect, useMemo, useState } from 'react'
+import type { Recipe, Diet } from '../lib/types'
+import { RECIPES } from '../lib/recipes'
+import { findMatches, matchesRecipeSearch } from '../lib/match'
+
+import ImageDropzone from '../components/ImageDropzone'
+import IngredientPicker from '../components/IngredientPicker'
+import Filters from '../components/Filters'
+import CuisineFilter from '../components/CuisineFilter'
+import RecipeCard from '../components/RecipeCard'
+import FavoritesDrawer from '../components/FavoritesDrawer'
+import SkeletonCard from '../components/SkeletonCard'
+import EmptyState from '../components/EmptyState'
+import MobileFilters from '../components/MobileFilters'
+import SearchBar from '../components/SearchBar'
+
+import { getPersonalizedRecommendations } from '../lib/recommend'
+
+// UI
+import { Card, CardContent } from "../components/card"
+
+export default function Page() {
+  const [ingredients, setIngredients] = useState<string[]>([])
+  const [diet, setDiet] = useState<Diet>('none')
+  const [maxTime, setMaxTime] = useState<number | undefined>(30)
+  const [difficulty, setDifficulty] = useState<Array<'easy' | 'medium' | 'hard'>>([])
+  const [caption, setCaption] = useState('')
+  const [recs, setRecs] = useState<Recipe[]>([])
+  const [loading, setLoading] = useState(false)
+  const [cuisinesSel, setCuisinesSel] = useState<string[]>([])
+  const [query, setQuery] = useState('') // 🔎 search state
+
+  const cuisinesAll = useMemo(
+    () => Array.from(new Set(RECIPES.map(r => r.cuisine))).sort(),
+    []
+  )
+
+  useEffect(() => {
+    try {
+      const recList = getPersonalizedRecommendations?.({
+        diet,
+        cuisines: cuisinesSel,
+        userIngredients: ingredients,
+        limit: 6,
+      }) ?? []
+      const uniq = Array.from(new Map(recList.map(r => [r.id, r])).values())
+      setRecs(uniq)
+    } catch {
+      setRecs([])
+    }
+  }, [ingredients, diet, cuisinesSel])
+
+  const results = useMemo(
+    () =>
+      findMatches(RECIPES, {
+        userIngredients: ingredients,
+        diet,
+        maxTime,
+        difficulty,
+        cuisine: cuisinesSel,
+      }),
+    [ingredients, diet, maxTime, difficulty, cuisinesSel]
+  )
+
+  const uniqueResults = useMemo(() => {
+    const seen = new Set<string>()
+    return results.filter(x => {
+      const id = x.recipe.id
+      if (seen.has(id)) return false
+      seen.add(id)
+      return true
+    })
+  }, [results])
+
+  // 🔎 Apply text search after all other filters
+  const searchedResults = useMemo(() => {
+    return uniqueResults.filter((x) => matchesRecipeSearch(x.recipe as any, query))
+  }, [uniqueResults, query])
+
+  // Shared filters
+  const renderFilters = () => (
+    <div className="space-y-4">
+      <Filters
+        diet={diet}
+        setDiet={setDiet}
+        maxTime={maxTime}
+        setMaxTime={setMaxTime}
+        difficulty={difficulty}
+        setDifficulty={setDifficulty}
+      />
+      {/* Optional cuisine filter */}
+      {/* <CuisineFilter cuisines={cuisinesAll} selected={cuisinesSel} onChange={setCuisinesSel} /> */}
+    </div>
+  )
+
+  return (
+    <div className="space-y-8">
+      {/* === HEADER === */}
+      <Card className="shadow-lg rounded-2xl bg-gradient-to-r from-green-50 to-teal-50">
+        <CardContent className="p-8 space-y-6">
+          <div className="text-center space-y-2">
+            <h1 className="text-4xl font-bold text-gray-800">🍳 Smart Recipe Generator</h1>
+            <p className="text-gray-600">Find delicious recipes with the ingredients you already have</p>
+          </div>
+
+          {/* 🔎 SEARCH AT TOP */}
+          <div className="flex justify-center">
+            <SearchBar
+              value={query}
+              onChange={setQuery}
+              className="w-full max-w-2xl"
+              placeholder="Search recipes (name, cuisine, tag, ingredient, time)…"
+            />
+          </div>
+
+          {/* Input + Upload */}
+          <div className="flex flex-col md:flex-row gap-6 items-start md:items-center">
+            <div className="flex-1 w-full">
+              <IngredientPicker value={ingredients} onChange={setIngredients} />
+            </div>
+            <div className="flex-1 w-full">
+              <ImageDropzone
+                onRecognize={(ings, cap) => {
+                  setCaption(cap || '')
+                  if (ings?.length) setIngredients([...new Set([...ingredients, ...ings])])
+                }}
+                onLoadingChange={setLoading}
+              />
+            </div>
+          </div>
+
+          {caption && (
+            <p className="text-sm text-gray-500 italic text-center">
+              Caption guess: “{caption}”
+            </p>
+          )}
+
+          {/* Mobile filters */}
+          <div className="md:hidden pt-2">
+            <MobileFilters renderFilters={renderFilters} />
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* === MAIN CONTENT === */}
+      <div className="grid md:grid-cols-[280px,1fr] gap-6">
+        {/* Sidebar filters (desktop) */}
+        <aside className="hidden md:block">
+          <div className="card md:sticky md:top-4 md:h-fit space-y-4">
+            <h3 className="font-semibold">Filters</h3>
+            {renderFilters()}
+          </div>
+        </aside>
+
+        {/* Results */}
+        <section className="space-y-3">
+          <h2 className="section-title">Suggestions</h2>
+
+          {loading && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <SkeletonCard key={i} />
+              ))}
+            </div>
+          )}
+
+          {!loading && searchedResults.length === 0 && (
+            <EmptyState message={`No recipes match “${query}”. Try another search or relax filters.`} />
+          )}
+
+          {/* ✅ Masonry layout for suggestions */}
+          {!loading && searchedResults.length > 0 && (
+            <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
+              {searchedResults.slice(0, 12).map((x) => (
+                <div key={x.recipe.id} style={{ breakInside: 'avoid' }} className="mb-4">
+                  <RecipeCard recipe={x.recipe as any} userIngredients={ingredients} />
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* ✅ Masonry layout for recommendations */}
+          {recs.length > 0 && (
+            <div className="space-y-3 pt-4">
+              <h2 className="section-title">Recommended For You</h2>
+              <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
+                {recs.map((r) => (
+                  <div key={r.id} style={{ breakInside: 'avoid' }} className="mb-4">
+                    <RecipeCard recipe={r as any} userIngredients={ingredients} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </section>
+      </div>
+
+      <FavoritesDrawer />
+    </div>
+  )
+}

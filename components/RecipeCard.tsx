@@ -994,3 +994,191 @@ export default function RecipeCard({
     </div>
   )
 }
+
+
+// 'use client'
+// import React from 'react'
+// import Image from 'next/image'
+// import type { Recipe } from '../lib/types'
+// import Stars from './Stars'
+// import { getRatingFor, setRating, isFavorite, toggleFavorite } from '../lib/storage'
+// import { suggestSubs } from '../lib/substitutions'
+// import { ChevronDown, ChevronUp } from 'lucide-react'
+
+// function pill(label: string) {
+//   return <span className="chip">{label}</span>
+// }
+
+// export default function RecipeCard({
+//   recipe,
+//   userIngredients = [],
+// }: {
+//   recipe: Recipe
+//   userIngredients?: string[]
+// }) {
+//   const [fav, setFav] = React.useState(false)
+//   const [stars, setStars] = React.useState(0)
+//   const [expanded, setExpanded] = React.useState(false)
+//   const [servings, setServings] = React.useState(recipe.servings)
+
+//   React.useEffect(() => {
+//     setFav(isFavorite(recipe.id))
+//     setStars(getRatingFor(recipe.id))
+//   }, [recipe.id])
+
+//   function handleFav() {
+//     setFav(toggleFavorite(recipe.id))
+//   }
+//   function handleRate(v: number) {
+//     setRating(recipe.id, v)
+//     setStars(v)
+//   }
+
+//   // Nutrition scaling
+//   const factor = servings / recipe.servings
+//   const n = recipe.nutritionPerServing
+//   const nScaled = {
+//     calories: Math.round(n.calories * factor),
+//     protein: +(n.protein * factor).toFixed(1),
+//     carbs: +(n.carbs * factor).toFixed(1),
+//     fat: +(n.fat * factor).toFixed(1),
+//   }
+
+//   // Highlight + subs
+//   const have = new Set(userIngredients.map((s) => s.toLowerCase().trim()))
+//   const highlight = (name: string) => {
+//     const has = have.has(name.toLowerCase())
+//     return <span className={has ? 'font-semibold text-[--color-accent]' : ''}>{name}</span>
+//   }
+
+//   return (
+//     <div className="card space-y-3 overflow-hidden">
+//       {/* === HERO (Next/Image) === */}
+//       {recipe.image ? (
+//         <div className="relative -m-4 mb-3 h-44">
+//           <Image
+//             src={recipe.image}
+//             alt={recipe.title}
+//             fill
+//             // priority // <- enable if you want eager load above-the-fold
+//             className="object-cover"
+//             sizes="(max-width: 640px) 100vw, (max-width:1024px) 50vw, 33vw"
+//           />
+//           {/* gradient for readability */}
+//           <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/25 to-transparent" />
+//           {/* title + actions */}
+//           <div className="absolute bottom-2 left-3 right-3 flex items-center justify-between gap-2">
+//             <h3 className="text-white font-semibold text-lg drop-shadow">{recipe.title}</h3>
+//             <div className="flex items-center gap-2">
+//               <Stars value={stars} onChange={handleRate} />
+//               <button onClick={handleFav} className="icon-btn" aria-label="favorite">
+//                 {fav ? '💖' : '🤍'}
+//               </button>
+//               <button
+//                 onClick={() => setExpanded((s) => !s)}
+//                 className="icon-btn"
+//                 aria-label="expand"
+//               >
+//                 {expanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       ) : (
+//         /* Fallback header when no image */
+//         <div className="flex items-center justify-between gap-2">
+//           <h3 className="text-lg font-semibold">{recipe.title}</h3>
+//           <div className="flex items-center gap-2">
+//             <Stars value={stars} onChange={handleRate} />
+//             <button onClick={handleFav} className="icon-btn" aria-label="favorite">
+//               {fav ? '💖' : '🤍'}
+//             </button>
+//             <button
+//               onClick={() => setExpanded((s) => !s)}
+//               className="icon-btn"
+//               aria-label="expand"
+//             >
+//               {expanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+//             </button>
+//           </div>
+//         </div>
+//       )}
+
+//       {/* meta pills always visible */}
+//       <div className="flex flex-wrap gap-2 text-xs subtle">
+//         {pill(recipe.cuisine)}
+//         {pill(recipe.difficulty)}
+//         {pill(`${recipe.timeMinutes} min`)}
+//         {recipe.dietTags?.map((t) => (
+//           <span key={t} className="chip">
+//             {t}
+//           </span>
+//         ))}
+//       </div>
+
+//       {/* Expanded content */}
+//       {expanded && (
+//         <div className="space-y-3 pt-2 border-t">
+//           <div className="flex items-center gap-2">
+//             <label className="text-sm">Servings</label>
+//             <input
+//               className="number"
+//               type="number"
+//               min={1}
+//               value={servings}
+//               onChange={(e) => setServings(Math.max(1, Number(e.target.value) || 1))}
+//             />
+//           </div>
+
+//           {/* Ingredients */}
+//           <div>
+//             <h4 className="font-semibold">Ingredients</h4>
+//             <ul className="list-disc pl-5 leading-relaxed space-y-1.5">
+//               {recipe.ingredients.map((ing, i) => {
+//                 const missing = !have.has(ing.name.toLowerCase())
+//                 const subs = missing ? suggestSubs(ing.name) : []
+//                 return (
+//                   <li key={i}>
+//                     <div className="flex flex-wrap items-center gap-2">
+//                       <span>
+//                         {highlight(ing.name)}
+//                         {ing.quantity ? ` — ${ing.quantity}` : ''}
+//                       </span>
+//                       <span className={`badge ${missing ? '' : 'chip--accent'}`}>
+//                         {missing ? 'missing' : 'have'}
+//                       </span>
+//                     </div>
+//                     {missing && subs.length > 0 && (
+//                       <div className="text-xs subtle mt-0.5">Try: {subs.slice(0, 2).join(', ')}</div>
+//                     )}
+//                   </li>
+//                 )
+//               })}
+//             </ul>
+//           </div>
+
+//           {/* Steps */}
+//           <div>
+//             <h4 className="font-semibold">Steps</h4>
+//             <ol className="list-decimal pl-5 mt-2 space-y-1 leading-relaxed">
+//               {recipe.steps.map((s, i) => (
+//                 <li key={i}>{s}</li>
+//               ))}
+//             </ol>
+//           </div>
+
+//           {/* Nutrition */}
+//           <div>
+//             <h4 className="font-semibold mb-1">Nutrition (per current serving)</h4>
+//             <div className="flex flex-wrap gap-2">
+//               <span className="chip chip--accent">{nScaled.calories} kcal</span>
+//               <span className="chip chip--accent">P {nScaled.protein} g</span>
+//               <span className="chip chip--accent">C {nScaled.carbs} g</span>
+//               <span className="chip chip--accent">F {nScaled.fat} g</span>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   )
+// }

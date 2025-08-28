@@ -57,3 +57,26 @@ export function findMatches(recipes: Recipe[], opts: MatchOptions) {
     .filter((x) => x.score >= 0)
     .sort((a, b) => b.score - a.score)
 }
+
+const contains = (s: string | undefined, q: string) =>
+  (s ?? "").toLowerCase().includes(q);
+
+// Text matcher used by the search bar
+export function matchesRecipeSearch(recipe: Recipe, qRaw: string): boolean {
+  const q = qRaw.trim().toLowerCase();
+  if (!q) return true;
+
+  const nameHit = contains((recipe as any).title ?? (recipe as any).name, q);
+  const cuisineHit = contains((recipe as any).cuisine, q);
+  const diffHit = contains((recipe as any).difficulty as string, q);
+  const tagsHit = ((recipe as any).dietTags ?? []).some((t: string) => contains(t, q));
+  const ingHit = ((recipe as any).ingredients ?? []).some(
+    (ing: { name: string }) => contains(ing?.name, q)
+  );
+  const timeHit =
+    /^\d+$/.test(q) && typeof (recipe as any).timeMinutes === "number"
+      ? String((recipe as any).timeMinutes).includes(q)
+      : false;
+
+  return nameHit || cuisineHit || diffHit || tagsHit || ingHit || timeHit;
+}

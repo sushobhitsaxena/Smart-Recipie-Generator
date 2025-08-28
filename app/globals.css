@@ -1,3 +1,4 @@
+
 @import "tailwindcss";
 
 :root {
@@ -28,8 +29,8 @@ html, body { height: 100%; }
 
 :root.light{
   --color-bg:        hsl(0, 0%, 95%);
-  --color-fg:        hsl(240, 87%, 65%);
-  --color-muted:     hsl(240, 92%, 5%);
+  --color-fg:        hsl(247, 96%, 27%);
+  --color-muted:     hsl(211, 80%, 56%);
   --color-border:    hsl(240 8% 86%);
   --color-surface:   hsl(0 0% 100%);
   --color-accent:    hsl(160, 91%, 48%);
@@ -106,6 +107,17 @@ a,button{ transition: transform .12s ease, opacity .12s ease, background .2s eas
 
 .btn-primary:hover{ background: linear-gradient(135deg, var(--color-accent-600), var(--color-accent-800)) }
 
+/* subtle top glow under header */
+header::after{
+  content:"";
+  position:absolute; left:0; right:0; bottom:-1px; height:1px;
+  background: linear-gradient(90deg,
+    color-mix(in oklab, var(--color-accent) 30%, transparent),
+    transparent 30% 70%,
+    color-mix(in oklab, var(--color-secondary) 25%, transparent)
+  );
+  pointer-events:none;
+}
 
 
 
