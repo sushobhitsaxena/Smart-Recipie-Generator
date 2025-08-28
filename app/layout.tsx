@@ -97,6 +97,18 @@ export const metadata: Metadata = {
   description: 'Suggest recipes from your ingredients',
 }
 
+// export const metadata: Metadata = {
+//   title: "Smart Recipe Generator",
+//   description: "Find delicious recipes from ingredients you already have.",
+//   openGraph: {
+//     title: "Smart Recipe Generator",
+//     description: "Find delicious recipes from ingredients you already have.",
+//     images: ["public/images/flatlay-with-food.jpg"],
+//     type: "website",
+//   },
+//   icons: { icon: "/favicon.ico" },
+// };
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>

@@ -68,6 +68,7 @@ import React, { useEffect, useState } from 'react'
 import ThemeToggle from './ThemeToggle'
 import SearchBar from './SearchBar'
 
+
 export default function Header() {
   const [headerQuery, setHeaderQuery] = useState('')
 

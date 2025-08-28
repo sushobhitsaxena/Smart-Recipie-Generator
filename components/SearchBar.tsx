@@ -51,8 +51,10 @@ export default function SearchBar({
       role="search"
       aria-labelledby={labelId}
       className={[
-        "relative w-full max-w-xl rounded-2xl border bg-white/70 backdrop-blur shadow-sm",
-        "focus-within:ring-2 focus-within:ring-zinc-200",
+        "relative w-full",
+    "rounded-full border border-zinc-100 bg-white/80 backdrop-blur",
+    "shadow-sm transition-all",
+    "hover:shadow-md focus-within:shadow-md",
         className,
       ].join(" ")}
     >
@@ -65,7 +67,7 @@ export default function SearchBar({
         value={local}
         onChange={(e) => setLocal(e.target.value)}
         placeholder={placeholder}
-        className="h-11 w-full rounded-2xl bg-transparent pl-10 pr-20 outline-none"
+        className="h-14 w-full rounded-full bg-transparent pl-12 pr-24 text-[15px] focus-visible:outline-none"
         autoComplete="off"
         spellCheck={false}
       />
@@ -87,7 +89,7 @@ export default function SearchBar({
           }}
           aria-label="Clear search"
         >
-          Clear
+        Clear
         </button>
       )}
     </div>

@@ -897,7 +897,7 @@ export const RECIPES: Recipe[] =  [
     id: 'chana-masala',
     title: 'Chana Masala',
     cuisine: 'Indian',
-    // image: '/Users/udaydubey/smart-recipe-generator/images/delicious-cooked-beans-bowl.jpg',
+   
     ingredients: [
       { name: 'chickpeas', quantity: '2 cups cooked' },
       { name: 'onion', quantity: '1 medium, chopped' },
@@ -916,13 +916,15 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'easy',
     dietTags: ['veg', 'vegan', 'gluten-free'],
     servings: 3,
+    image: '',
     nutritionPerServing: { calories: 280, protein: 12, carbs: 42, fat: 6 },
   },
   {
     id: 'palak-paneer',
     title: 'Palak Paneer',
     cuisine: 'Indian',
-    //  image: '/Users/udaydubey/smart-recipe-generator/public/images/flat-lay-pakistani-food-arrangement.jpg',
+ 
+   
     ingredients: [
       { name: 'spinach', quantity: '250g' },
       { name: 'paneer', quantity: '200g' },
@@ -942,6 +944,9 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['veg', 'gluten-free'],
     servings: 3,
+     image: "/images/palakpanner.jpg",
+
+    
     nutritionPerServing: { calories: 320, protein: 15, carbs: 20, fat: 18 },
   },
   {
@@ -966,6 +971,9 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['non-veg', 'gluten-free'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
+   
     nutritionPerServing: { calories: 420, protein: 28, carbs: 12, fat: 30 },
   },
   {
@@ -990,6 +998,9 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['veg'],
     servings: 4,
+    image: 'https://images.unsplash.com/photo-1630409346824-4f0e7b080087?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dmVnJTIwYmlyeWFuaXxlbnwwfHwwfHx8MA%3D%3D',
+    
+    
     nutritionPerServing: { calories: 350, protein: 9, carbs: 60, fat: 10 },
   },
   {
@@ -1014,6 +1025,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'easy',
     dietTags: ['veg', 'gluten-free'],
     servings: 3,
+    image: 'https://images.unsplash.com/photo-1626500155537-93690c24099e?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZGFsJTIwdGFka2F8ZW58MHx8MHx8fDA%3D',
+    
     nutritionPerServing: { calories: 240, protein: 11, carbs: 35, fat: 7 },
   },
   {
@@ -1038,6 +1051,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['veg', 'gluten-free', 'vegan'],
     servings: 4,
+    image: 'https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFzYWxhJTIwZG9zYXxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 300, protein: 7, carbs: 50, fat: 8 },
   },
   {
@@ -1062,6 +1077,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['veg', 'gluten-free', 'vegan'],
     servings: 4,
+    image: 'https://images.unsplash.com/photo-1632104667384-06f58cb7ad44?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8aWRsaXxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 280, protein: 9, carbs: 52, fat: 4 },
   },
   {
@@ -1086,6 +1103,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'easy',
     dietTags: ['veg'],
     servings: 4,
+    image: 'https://images.unsplash.com/photo-1626132647523-66f5bf380027?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGF2JTIwYmhhaml8ZW58MHx8MHx8fDA%3D',
+    
     nutritionPerServing: { calories: 320, protein: 8, carbs: 55, fat: 10 },
   },
   {
@@ -1108,6 +1127,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['veg', 'gluten-free', 'vegan'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1712678665724-7c3faa117a2d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cmFqbWElMjBjdXJyeXxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 310, protein: 13, carbs: 52, fat: 5 },
   },
 
@@ -1132,6 +1153,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['veg'],
     servings: 4,
+    image: '',
+    
     nutritionPerServing: { calories: 450, protein: 12, carbs: 65, fat: 15 },
   },
   {
@@ -1180,6 +1203,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['veg', 'gluten-free'],
     servings: 3,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 320, protein: 15, carbs: 18, fat: 20 },
   },
   {
@@ -1204,6 +1229,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['non-veg', 'gluten-free'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 280, protein: 30, carbs: 2, fat: 18 },
   },
   {
@@ -1228,6 +1255,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['veg', 'gluten-free'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 350, protein: 15, carbs: 45, fat: 12 },
   },
   {
@@ -1252,6 +1281,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['veg', 'gluten-free'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 220, protein: 8, carbs: 30, fat: 8 },
   },
 
@@ -1276,6 +1307,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['veg', 'gluten-free'],
     servings: 3,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 330, protein: 14, carbs: 18, fat: 22 },
   },
 
@@ -1301,6 +1334,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['veg', 'gluten-free', 'vegan'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 250, protein: 5, carbs: 25, fat: 15 },
   },
   {
@@ -1325,6 +1360,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'easy',
     dietTags: ['veg', 'gluten-free', 'vegan'],
     servings: 3,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 120, protein: 3, carbs: 15, fat: 6 },
   },
   {
@@ -1349,6 +1386,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['veg', 'gluten-free', 'vegan'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 400, protein: 15, carbs: 70, fat: 8 },
   },
   {
@@ -1373,6 +1412,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'easy',
     dietTags: ['veg', 'gluten-free', 'vegan'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 300, protein: 6, carbs: 40, fat: 12 },
   },
   {
@@ -1397,6 +1438,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'easy',
     dietTags: ['veg', 'gluten-free', 'vegan'],
     servings: 2,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 180, protein: 5, carbs: 35, fat: 6 },
   },
   {
@@ -1421,6 +1464,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['veg', 'gluten-free', 'vegan'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 120, protein: 3, carbs: 20, fat: 2 },
   },
   {
@@ -1445,6 +1490,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'easy',
     dietTags: ['veg', 'gluten-free', 'vegan'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 150, protein: 6, carbs: 25, fat: 4 },
   },
   {
@@ -1467,6 +1514,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'easy',
     dietTags: ['veg', 'vegan'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 180, protein: 5, carbs: 30, fat: 5 },
   },
   {
@@ -1491,6 +1540,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'hard',
     dietTags: ['veg', 'gluten-free', 'vegan'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 250, protein: 6, carbs: 35, fat: 10 },
   },
   {
@@ -1514,6 +1565,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['non-veg', 'gluten-free'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 250, protein: 28, carbs: 5, fat: 12 },
   },
   {
@@ -1537,6 +1590,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['veg', 'gluten-free'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 280, protein: 12, carbs: 40, fat: 10 },
   },
   {
@@ -1560,6 +1615,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['non-veg', 'gluten-free'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 300, protein: 32, carbs: 6, fat: 15 },
   },
   {
@@ -1580,6 +1637,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'easy',
     dietTags: ['veg', 'vegan'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 180, protein: 5, carbs: 30, fat: 5 },
   },
   {
@@ -1604,6 +1663,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['non-veg', 'gluten-free'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 380, protein: 32, carbs: 8, fat: 25 },
   },
   {
@@ -1628,6 +1689,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['veg', 'gluten-free'],
     servings: 3,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 320, protein: 15, carbs: 20, fat: 18 },
   },
 
@@ -1653,6 +1716,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['veg', 'gluten-free'],
     servings: 3,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 280, protein: 8, carbs: 25, fat: 15 },
   },
   {
@@ -1676,6 +1741,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'easy',
     dietTags: ['veg', 'gluten-free', 'vegan'],
     servings: 3,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 180, protein: 4, carbs: 30, fat: 6 },
   },
   {
@@ -1699,6 +1766,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'easy',
     dietTags: ['veg', 'gluten-free'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 250, protein: 6, carbs: 45, fat: 8 },
   },
   {
@@ -1721,6 +1790,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'easy',
     dietTags: ['non-veg', 'gluten-free'],
     servings: 2,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 180, protein: 12, carbs: 6, fat: 12 },
   },
   {
@@ -1742,6 +1813,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'easy',
     dietTags: ['veg', 'gluten-free'],
     servings: 2,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 150, protein: 4, carbs: 30, fat: 2 },
   },
   {
@@ -1764,6 +1837,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'easy',
     dietTags: ['veg', 'vegan'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 180, protein: 5, carbs: 30, fat: 5 },
   },
   {
@@ -1787,6 +1862,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['veg', 'gluten-free'],
     servings: 3,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 200, protein: 14, carbs: 6, fat: 12 },
   },
   {
@@ -1810,6 +1887,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'easy',
     dietTags: ['veg', 'gluten-free', 'vegan'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 80, protein: 2, carbs: 10, fat: 3 },
   },
   {
@@ -1834,6 +1913,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['non-veg', 'gluten-free'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 400, protein: 35, carbs: 10, fat: 25 },
   },
   {
@@ -1858,6 +1939,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['veg', 'gluten-free'],
     servings: 3,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 350, protein: 15, carbs: 20, fat: 22 },
   },
 
@@ -1884,6 +1967,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['veg', 'gluten-free'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 400, protein: 12, carbs: 50, fat: 18 },
   },
   {
@@ -1906,6 +1991,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'easy',
     dietTags: ['veg', 'vegan'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 300, protein: 6, carbs: 40, fat: 12 },
   },
   {
@@ -1927,9 +2014,11 @@ export const RECIPES: Recipe[] =  [
       'Serve hot with steamed rice.',
     ],
     timeMinutes: 35,
-    difficulty: 'medium',
+    difficulty: 'hard',
     dietTags: ['veg', 'gluten-free', 'vegan'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 300, protein: 10, carbs: 55, fat: 8 },
   },
   {
@@ -1954,6 +2043,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['veg', 'gluten-free'],
     servings: 3,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 350, protein: 12, carbs: 25, fat: 22 },
   },
   {
@@ -1978,6 +2069,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'hard',
     dietTags: ['non-veg', 'gluten-free'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 450, protein: 35, carbs: 55, fat: 18 },
   },
   {
@@ -2001,6 +2094,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['veg', 'gluten-free'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 220, protein: 4, carbs: 30, fat: 10 },
   },
   {
@@ -2023,6 +2118,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'easy',
     dietTags: ['veg', 'vegan'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 350, protein: 6, carbs: 50, fat: 15 },
   },
   {
@@ -2044,9 +2141,11 @@ export const RECIPES: Recipe[] =  [
       'Add tomato puree, yogurt, and spices. Cook until tender.',
     ],
     timeMinutes: 80,
-    difficulty: 'hard',
+    difficulty: 'medium',
     dietTags: ['non-veg', 'gluten-free'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 450, protein: 40, carbs: 8, fat: 25 },
   },
   {
@@ -2069,6 +2168,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['non-veg', 'gluten-free'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 300, protein: 30, carbs: 2, fat: 18 },
   },
   {
@@ -2090,6 +2191,8 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['veg', 'gluten-free'],
     servings: 4,
+    image: 'https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D',
+    
     nutritionPerServing: { calories: 180, protein: 6, carbs: 35, fat: 2 },
   }
 ]

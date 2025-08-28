@@ -19,7 +19,7 @@ export type Recipe = {
   dietTags: string[]
   servings: number
   nutritionPerServing: { calories: number; protein: number; carbs: number; fat: number }
-  //  image?: string
+    image?: string
 }
 
 export interface Rating {

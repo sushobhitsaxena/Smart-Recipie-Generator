@@ -1885,6 +1885,8 @@ import SkeletonCard from '../components/SkeletonCard'
 import EmptyState from '../components/EmptyState'
 import MobileFilters from '../components/MobileFilters'
 import SearchBar from '../components/SearchBar'
+import Image from "next/image"
+
 
 import { getPersonalizedRecommendations } from '../lib/recommend'
 
@@ -1971,9 +1973,21 @@ export default function Page() {
       <Card className="shadow-lg rounded-2xl bg-gradient-to-r from-green-50 to-teal-50">
         <CardContent className="p-8 space-y-6">
           <div className="text-center space-y-2">
-            <h1 className="text-4xl font-bold text-gray-800">🍳 Smart Recipe Generator</h1>
+            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900">🍳 Smart Recipe Generator</h1>
             <p className="text-gray-600">Find delicious recipes with the ingredients you already have</p>
           </div>
+          {/* Hero image */}
+<div className="relative mx-auto w-full max-w-4xl h-40 md:h-56 rounded-2xl overflow-hidden shadow-md">
+  <Image
+    src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1600&auto=format&fit=crop"
+    alt="Fresh ingredients and spices"
+    fill
+    sizes="(max-width: 768px) 100vw, 800px"
+    className="object-cover"
+    priority
+  />
+</div>
+
 
           {/* 🔎 SEARCH AT TOP */}
           <div className="flex justify-center">
@@ -2023,6 +2037,11 @@ export default function Page() {
             {renderFilters()}
           </div>
         </aside>
+
+
+
+
+
 
         {/* Results */}
         <section className="space-y-3">
