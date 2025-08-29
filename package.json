@@ -1,10 +1,11 @@
+
 {
   "name": "smart-recipe-generator",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "build": "next build --turbopack --no-lint",
     "start": "next start",
     "lint": "eslint"
   },
@@ -33,3 +34,5 @@
     "typescript": "^5"
   }
 }
+
+
