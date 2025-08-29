@@ -410,7 +410,9 @@ const unsplash = `https://source.unsplash.com/800x600/?${imgQuery}`;
         carbs: Number(data.nutritionPerServing?.carbs ?? 0),
         fat: Number(data.nutritionPerServing?.fat ?? 0),
       },
-      image: unsplash || localFallbackFor(data.title || '')
+      image: localFallbackFor(data.title || ''),
+// instead of: image: unsplash || localFallbackFor(data.title || '')
+
     };
 
     setAiRecipe(normalized);
