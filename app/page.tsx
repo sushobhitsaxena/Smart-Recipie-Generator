@@ -270,6 +270,7 @@ import { RECIPES } from '../lib/recipes'
 import { findMatches, matchesRecipeSearch } from '../lib/match'
 
 import ImageDropzone from '../components/ImageDropzone'
+import { normalizeIngredientList } from "../lib/normalize";
 import IngredientPicker from '../components/IngredientPicker'
 import Filters from '../components/Filters'
 import RecipeCard from '../components/RecipeCard'
@@ -471,14 +472,27 @@ return (
               />
             </div>
             <div className="flex-1 w-full">
-              <ImageDropzone
+              {/* <ImageDropzone
                 onRecognize={(ings, cap) => {
                   setCaption(cap || '')
                   if (ings?.length)
                     setIngredients([...new Set([...ingredients, ...ings])])
                 }}
                 onLoadingChange={setLoading}
-              />
+              /> */}
+
+
+              <ImageDropzone
+              onRecognize={(ings, cap) => {
+                setCaption(cap || "");
+                const normalized = normalizeIngredientList(ings || []);
+                if (normalized.length) {
+                  // merge + dedupe against existing
+                  setIngredients(prev => Array.from(new Set([...prev, ...normalized])));
+                }
+              }}
+              onLoadingChange={setLoading}
+/>
             </div>
           </div>
 
