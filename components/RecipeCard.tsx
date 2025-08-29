@@ -1252,6 +1252,7 @@ export default function RecipeCard({
           className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
           priority={false}
           unoptimized
+          
         />
 
         {/* Fav over image */}
