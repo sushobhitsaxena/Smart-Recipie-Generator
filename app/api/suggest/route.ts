@@ -6,8 +6,6 @@ import type { Recipe } from '@/lib/types'
 // Return top N recommended recipes based on favorites + ratings
 export async function GET() {
   try {
-    // localStorage is client-only, so simulate with dummy store for now
-    // In real use: you'd persist favorites/ratings in DB
     const favs = getFavorites()
     const ratings = getRatings()
 
