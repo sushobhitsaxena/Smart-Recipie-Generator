@@ -2073,7 +2073,7 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'hard',
     dietTags: ['non-veg', 'gluten-free'],
     servings: 4,
-    image: '/images/chickenbiryani.jpeg',
+    image: '/images/chickenbriyani.jpeg',
     
     nutritionPerServing: { calories: 450, protein: 35, carbs: 55, fat: 18 },
   },

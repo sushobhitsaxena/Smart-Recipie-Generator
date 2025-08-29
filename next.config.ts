@@ -25,17 +25,18 @@
 // export default nextConfig
 
 // next.config.ts
-import type { NextConfig } from "next";
+// next.config.ts
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
-      { protocol: "https", hostname: "images.unsplash.com" },
-      { protocol: "https", hostname: "plus.unsplash.com" },
-      // (optional) ke liye agar fallback use karoge
-      { protocol: "https", hostname: "picsum.photos" },
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+      { protocol: 'https', hostname: 'plus.unsplash.com' },
+      // ⭐ Add this for the AI image query endpoint
+      { protocol: 'https', hostname: 'source.unsplash.com' },
     ],
   },
-};
+}
 
-export default nextConfig;
+export default nextConfig
