@@ -999,7 +999,7 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'medium',
     dietTags: ['veg'],
     servings: 4,
-    image: '/images/vegbiryani.jpeg',
+    image: '/images/vegbriyani.jpeg',
     
     
     nutritionPerServing: { calories: 350, protein: 9, carbs: 60, fat: 10 },
@@ -1107,7 +1107,7 @@ export const RECIPES: Recipe[] =  [
     difficulty: 'easy',
     dietTags: ['veg'],
     servings: 4,
-    image: '/images/pavbhaji.jpeg',
+    image: '/images/pavbahji.jpeg',
     
     nutritionPerServing: { calories: 320, protein: 8, carbs: 55, fat: 10 },
   },
