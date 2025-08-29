@@ -2,14 +2,15 @@
 
 /** Preferred Indian terms for common food synonyms */
 const PREFERRED: Record<string, string> = {
-  // Vegetables / herbs
+  // ===== Vegetables =====
   eggplant: "brinjal",
   aubergine: "brinjal",
   okra: "bhindi",
   "lady finger": "bhindi",
   ladyfinger: "bhindi",
-  cilantro: "coriander",
-  "coriander leaves": "coriander",
+  cilantro: "coriander leaves",
+  coriander: "coriander leaves",
+  "coriander leaves": "coriander leaves",
   scallion: "spring onion",
   "green onion": "spring onion",
   "spring onions": "spring onion",
@@ -19,36 +20,124 @@ const PREFERRED: Record<string, string> = {
   "red pepper": "capsicum",
   "green pepper": "capsicum",
   "yellow pepper": "capsicum",
+  zucchini: "courgette",
+  ridgegourd: "ridge gourd",
+  "ridge gourd": "ridge gourd",
+  bottleGourd: "bottle gourd",
+  "bottle gourd": "bottle gourd",
+  bittergourd: "bitter gourd",
+  "bitter gourd": "bitter gourd",
+  drumstick: "moringa",
+  moringa: "moringa",
+  clusterbeans: "cluster beans",
+  "cluster beans": "cluster beans",
+  broadbeans: "broad beans",
+  "broad beans": "broad beans",
 
-  // Dairy / pantry
+  // ===== Dairy & Pantry =====
   yogurt: "curd",
   "plain yogurt": "curd",
+  "greek yogurt": "curd",
   "cottage cheese": "paneer",
+  cheese: "paneer",
+  butter: "makhan",
+  clarifiedbutter: "ghee",
+  "clarified butter": "ghee",
 
-  // Pulses / legumes
-  "chickpea": "chickpeas",
+  // ===== Pulses / Legumes =====
+  chickpea: "chickpeas",
+  "chickpeas": "chickpeas",
   "garbanzo bean": "chickpeas",
   "garbanzo beans": "chickpeas",
+  kidneybeans: "rajma",
+  "kidney beans": "rajma",
+  lentils: "dal",
+  pigeonpeas: "toor dal",
+  "pigeon peas": "toor dal",
+  "black gram": "urad dal",
+  "green gram": "moong dal",
+  mungbean: "moong dal",
+  "mung beans": "moong dal",
+  "red lentils": "masoor dal",
+  "split red lentils": "masoor dal",
 
-  // Seafood
+  // ===== Seafood / Meat =====
   shrimp: "prawns",
+  prawn: "prawns",
+  lamb: "mutton",
+  goat: "mutton",
+  beef: "beef",
+  pork: "pork",
 
-  // Flours & starches
-  "cornstarch": "corn flour",
+  // ===== Flours & Starches =====
+  wheatflour: "atta",
+  "wheat flour": "atta",
+  "all purpose flour": "maida",
+  maida: "maida",
+  "all-purpose": "maida",
+  "all-purpose flour": "maida",
+  cornstarch: "corn flour",
   "corn starch": "corn flour",
-  "all purpose flour": "all-purpose flour",
-  "all-purpose": "all-purpose flour",
-  "all-purpose flour": "all-purpose flour",
+  riceflour: "rice flour",
+  "rice flour": "rice flour",
+  semolina: "sooji",
+  rava: "sooji",
+  sooji: "sooji",
+  millet: "bajra",
+  "pearl millet": "bajra",
+  sorghum: "jowar",
+  "finger millet": "ragi",
 
-  // Sugars
+  // ===== Sugars =====
+  sugar: "sugar",
+  jaggery: "jaggery",
   "powdered sugar": "icing sugar",
   "confectioners sugar": "icing sugar",
   "confectioner's sugar": "icing sugar",
+  "brown sugar": "brown sugar",
 
-  // Spices (just a few examples)
-  "chili powder": "chilli powder",
+  // ===== Spices =====
+  chili: "chilli",
+  chilies: "chillies",
   "red chili powder": "chilli powder",
+  "chili powder": "chilli powder",
+  turmeric: "turmeric",
   "turmeric powder": "turmeric",
+  cumin: "jeera",
+  "cumin seeds": "jeera",
+  corianderpowder: "dhania powder",
+  "coriander powder": "dhania powder",
+  cardamom: "elaichi",
+  cloves: "laung",
+  cinnamon: "dalchini",
+  bayleaf: "tej patta",
+  "bay leaf": "tej patta",
+  fenugreek: "methi",
+  "fenugreek seeds": "methi seeds",
+  mustardseeds: "sarson seeds",
+  "mustard seeds": "sarson seeds",
+  fennel: "saunf",
+  "fennel seeds": "saunf",
+
+  // ===== Fruits =====
+  banana: "banana",
+  apple: "apple",
+  orange: "orange",
+  pineapple: "pineapple",
+  papaya: "papaya",
+  guava: "guava",
+  pomegranate: "anar",
+  mango: "mango",
+  grapes: "grapes",
+  watermelon: "watermelon",
+  muskmelon: "kharbuja",
+
+  // ===== Oils =====
+  "vegetable oil": "oil",
+  "refined oil": "oil",
+  "mustard oil": "mustard oil",
+  "olive oil": "olive oil",
+  "coconut oil": "coconut oil",
 };
 
 /** Basic cleanup (case, punctuation, plural s/es). */
@@ -68,7 +157,7 @@ function singularGuess(s: string) {
   return s;
 }
 
-/** Convert a detected name to your preferred label (e.g., eggplant -> brinjal). */
+/** Convert a detected name to your preferred label */
 export function normalizeIngredientName(raw: string): string {
   let s = basicClean(raw);
   // direct
@@ -78,15 +167,15 @@ export function normalizeIngredientName(raw: string): string {
   const sing = singularGuess(s);
   if (PREFERRED[sing]) return PREFERRED[sing];
 
-  // special multi-word checks
+  // heuristics for catch-alls
   if (s.includes("eggplant")) return "brinjal";
   if (s.includes("aubergine")) return "brinjal";
-  if (s.includes("bell pepper")) return "capsicum";
-  if (s.includes("pepper") && s.includes("capsicum") === false) return "capsicum";
-  if (s.includes("cilantro")) return "coriander";
+  if (s.includes("okra")) return "bhindi";
+  if (s.includes("bell pepper") || s.includes("pepper")) return "capsicum";
+  if (s.includes("cilantro")) return "coriander leaves";
   if (s.includes("green onion") || s.includes("scallion")) return "spring onion";
 
-  return s; // fallback to cleaned text itself
+  return s; // fallback
 }
 
 /** Normalize a list, dedupe, and return an array */
