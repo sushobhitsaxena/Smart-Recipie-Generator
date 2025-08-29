@@ -375,7 +375,7 @@ export default function Page() {
   if (!ingredients.length) return alert("Add some ingredients first!");
   try {
     setLoading(true);
-    const res = await fetch("/api/genrate-recipe", {
+    const res = await fetch("/api/generate-recipe", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ingredients }),
