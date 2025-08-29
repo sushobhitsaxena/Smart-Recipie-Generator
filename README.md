@@ -74,7 +74,7 @@ Open http://localhost:3000
 
 📦 Deployment
 
-Deployed on Vercel → Live Demo
+Deployed on Vercel → https://smart-recipe-generator-3qli.vercel.app/
 
 📜 License
 
