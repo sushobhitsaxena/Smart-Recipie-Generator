@@ -17,37 +17,49 @@ Search by name, cuisine, tags, filter by diet & time, drop a photo of ingredient
 
 ## ✨ Features
 
-### 1. User Input
+1.🔑Authentication
+
+✅ Simple Login Page (email + password).
+
+✅ Access granted only to specific credentials (or a fixed list).
+
+✅ Once logged in → user can access the recipe generator.
+
+✅ Personalized greeting (Welcome, username!).
+
+⬜ (Optional) Add Logout button to switch users.
+
+### 2. User Input
 - ✅ Allow users to input available ingredients (text input or selecting from a list).
 - ✅ Option to specify dietary preferences (e.g., vegetarian, vegan, gluten-free).
 
-### 2. Recipe Generation
+### 3. Recipe Generation
 - ✅ Generate recipes based on the provided ingredients.
 - ✅ Suggest multiple recipes with detailed step-by-step instructions.
 - ✅ Include nutritional information (calories, protein, fats, carbs).
 
-### 3. Filters and Customization
+### 4. Filters and Customization
 - ✅ Filter recipes by difficulty, cooking time, or dietary restrictions.
 - ✅ Option to adjust serving sizes dynamically.
 
-### 4. Recipe Database
+### 5. Recipe Database
 - ✅ Predefined recipe database with a variety of cuisines.
 - ✅ Each recipe includes:
   - Ingredients  
   - Cooking steps  
   - Nutritional information  
 
-### 5. User Feedback
+### 6. User Feedback
 - ✅ Users can **rate and save** their favorite recipes (favorites stored locally).
 - ✅ “Recipe suggestions” feature based on ratings & preferences.
 
-### 6. UI/UX
+### 7. UI/UX
 - ✅ Clean, intuitive interface for easy navigation.
 - ✅ Mobile-responsive design for use on any device.
 - ✅ Light/Dark theme with a glassy header.
 - ✅ Keyboard shortcuts (e.g., `/` to focus search).
 
-### 7. Hosting
+### 8. Hosting
 - ✅ Free hosting with **Vercel**.  
 - ✅ Live demo: [Smart Recipe Generator](https://smart-recipe-generator-3qli.vercel.app/)
 
@@ -103,7 +115,7 @@ Search by name, cuisine, tags, filter by diet & time, drop a photo of ingredient
 
 ```bash
 ## 1️⃣ Clone the repo
-git clone https://github.com/UDAY1810/smart-recipe-generator.git
+git clone https://github.com/sushobhitsaxena/Smart-Recipie-Generator
 cd smart-recipe-generator
 
 ## 2️⃣ Install dependencies
@@ -127,4 +139,4 @@ Deployed on Vercel → https://smart-recipe-generator-gamma.vercel.app/
 📜 License
 
 Licensed under the MIT License.
-Made with ❤️ by Uday Dubey
+Made with ❤️ by Sushobhit Saxena
