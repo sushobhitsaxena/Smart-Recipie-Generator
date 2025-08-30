@@ -1,82 +1,124 @@
-🍳 Smart Recipe Generator
+# 🍳 Smart Recipe Generator
 
-Find delicious recipes using the ingredients you already have.
+![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)
+![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![OpenAI](https://img.shields.io/badge/OpenAI-API-412991?style=for-the-badge&logo=openai&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?style=for-the-badge&logo=vercel&logoColor=white)
+
+Find delicious recipes using the ingredients you already have.  
 Search by name, cuisine, tags, filter by diet & time, drop a photo of ingredients for recognition, and even generate a complete recipe with AI.
 
-✨ Features
+---
 
-🔎 Smart search → by name, cuisine, difficulty, tags, ingredients, time
+## ✨ Features
 
-⚖️ Match scoring → based on your available ingredients (with substitutions)
+### 1. User Input
+- ✅ Allow users to input available ingredients (text input or selecting from a list).
+- ✅ Option to specify dietary preferences (e.g., vegetarian, vegan, gluten-free).
 
-🤖 AI recipe generation → from a list of ingredients (OpenAI powered)
+### 2. Recipe Generation
+- ✅ Generate recipes based on the provided ingredients.
+- ✅ Suggest multiple recipes with detailed step-by-step instructions.
+- ✅ Include nutritional information (calories, protein, fats, carbs).
 
-📸 Photo recognition → upload ingredient photos → recognize → normalize names
+### 3. Filters and Customization
+- ✅ Filter recipes by difficulty, cooking time, or dietary restrictions.
+- ✅ Option to adjust serving sizes dynamically.
 
-🥗 Filters → diet, max time, difficulty, cuisine
+### 4. Recipe Database
+- ✅ Predefined recipe database with a variety of cuisines.
+- ✅ Each recipe includes:
+  - Ingredients  
+  - Cooking steps  
+  - Nutritional information  
 
-🎨 Beautiful UI → responsive grid & masonry layout
+### 5. User Feedback
+- ✅ Users can **rate and save** their favorite recipes (favorites stored locally).
+- ✅ “Recipe suggestions” feature based on ratings & preferences.
 
-⭐ Ratings & Favorites → locally stored (easy to swap with DB)
+### 6. UI/UX
+- ✅ Clean, intuitive interface for easy navigation.
+- ✅ Mobile-responsive design for use on any device.
+- ✅ Light/Dark theme with a glassy header.
+- ✅ Keyboard shortcuts (e.g., `/` to focus search).
 
-🌗 Light/Dark theme → glassy header, keyboard shortcuts (/ to focus search)
+### 7. Hosting
+- ✅ Free hosting with **Vercel**.  
+- ✅ Live demo: [Smart Recipe Generator](https://smart-recipe-generator-3qli.vercel.app/)
 
-⚡ Next.js 15 (App Router) + Turbopack + Tailwind CSS
+---
 
-🛠 Tech Stack
+## 🔑 Required Features Implemented
+- Ingredient recognition from images (photo upload → normalize names).
+- Recipe matching algorithm with **match scoring**.
+- Substitution suggestions for missing ingredients.
+- Dietary restrictions handling (vegetarian, vegan, gluten-free).
+- Product database with **20+ recipes**.
+- Live deployment (Vercel).
+- Fully **mobile responsive** design.
 
-Frontend
+---
 
-Next.js 15
+## 🧮 Evaluation Criteria (Covered in Project)
+- **Ingredient classification approach** → image-to-text recognition & normalization.  
+- **Recipe matching logic** → scoring system based on ingredient availability & substitutions.  
+- **Error handling** → fallbacks if ingredients not found, user-friendly messages.  
+- **User experience** → simple UI, filters, responsive design, local storage for favorites.  
 
-React 18
+---
 
-TypeScript
+## 🚀 Tech Stack
 
-Tailwind CSS
+### Frontend
+- **Next.js 15** (App Router, Turbopack)
+- **React 18**
+- **TypeScript**
+- **Tailwind CSS**
 
-UI
+### UI
+- Custom components
+- Lucide icons
+- Next.js Image component
 
-Custom components
+### AI & Data
+- **OpenAI (Chat Completions API)** → recipe generation
+- Ingredient photo recognition with normalization dataset
+- Local JSON/TS datasets + localStorage (for ratings/favorites)
 
-Lucide icons
+---
 
-Next.js Image
+## 📸 Demo
+![Smart Recipe Generator Screenshot](./public/demo.png)
 
-AI & Data
+---
 
-OpenAI (Chat Completions API) for recipe generation
+## 🛠 Getting Started
 
-Ingredient photo recognition (with normalization dataset)
-
-Local JSON/TS datasets + localStorage (for ratings/favorites)
-
-🚀 Getting Started
-1️⃣ Clone the repo
+```bash
+## 1️⃣ Clone the repo
 git clone https://github.com/UDAY1810/smart-recipe-generator.git
 cd smart-recipe-generator
 
-2️⃣ Install dependencies
+## 2️⃣ Install dependencies
 npm install
 
-3️⃣ Set environment variables
-
-Create a .env.local file:
-
+## 3️⃣ Set environment variables
+# Create a .env.local file in the root folder and add:
 OPENAI_API_KEY=your_openai_api_key
 
-4️⃣ Run locally
+## 4️⃣ Run locally
 npm run dev
 
+# Now open → http://localhost:3000
 
-Open http://localhost:3000
- 🎉
 
 📦 Deployment
 
-Deployed on Vercel → https://smart-recipe-generator-3qli.vercel.app/
+Deployed on Vercel → Live Demo
 
 📜 License
 
 Licensed under the MIT License.
-Made with ❤️ by Uday Dubey.
+Made with ❤️ by Uday Dubey
