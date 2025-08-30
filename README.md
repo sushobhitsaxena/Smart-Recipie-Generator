@@ -93,6 +93,8 @@ Search by name, cuisine, tags, filter by diet & time, drop a photo of ingredient
 
 ## 📸 Demo
 ![Smart Recipe Generator Screenshot](./public/demo.png)
+![Smart Recipe Generator Screenshot](./public/demo1.png)
+![Smart Recipe Generator Screenshot](./public/demo2.png)
 
 ---
 
