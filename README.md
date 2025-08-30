@@ -10,6 +10,8 @@
 Find delicious recipes using the ingredients you already have.  
 Search by name, cuisine, tags, filter by diet & time, drop a photo of ingredients for recognition, and even generate a complete recipe with AI.
 
+## Live WEBSITE - https://smart-recipe-generator-gamma.vercel.app/
+
 ---
 
 ## ✨ Features
@@ -116,7 +118,7 @@ npm run dev
 
 📦 Deployment
 
-Deployed on Vercel → Live Demo
+Deployed on Vercel → https://smart-recipe-generator-gamma.vercel.app/
 
 📜 License
 
