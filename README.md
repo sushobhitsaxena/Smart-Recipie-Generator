@@ -109,9 +109,12 @@ email=sushobhitsaxena99@gmail.com and  password=1234.
 ---
 
 ## 📸 Demo
-![Smart Recipe Generator Screenshot](./public/demo.png)
-![Smart Recipe Generator Screenshot](./public/demo1.png)
-![Smart Recipe Generator Screenshot](./public/demo2.png)
+![Smart Recipe Generator Screenshot](./public/01.png)
+![Smart Recipe Generator Screenshot](./public/02.png)
+![Smart Recipe Generator Screenshot](./public/03.png)
+![Smart Recipe Generator Screenshot](./public/04.png)
+![Smart Recipe Generator Screenshot](./public/05.png)
+![Smart Recipe Generator Screenshot](./public/06.png)
 
 ---
 
