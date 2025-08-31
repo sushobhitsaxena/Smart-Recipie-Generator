@@ -10,6 +10,9 @@
 Find delicious recipes using the ingredients you already have.  
 Search by name, cuisine, tags, filter by diet & time, drop a photo of ingredients for recognition, and even generate a complete recipe with AI.
 
+To acess the website please login with 
+email=sushobhitsaxena99@gmail.com and  password=1234.
+
 ## Live WEBSITE - https://smart-recipe-generator-gamma.vercel.app/
 ## Github Link - https://github.com/sushobhitsaxena
 
@@ -21,13 +24,14 @@ Search by name, cuisine, tags, filter by diet & time, drop a photo of ingredient
 
 ✅ Simple Login Page (email + password).
 
+✅ For Login Give  email=sushobhitsaxena99@gmail.com and  password=1234.
+
 ✅ Access granted only to specific credentials (or a fixed list).
 
 ✅ Once logged in → user can access the recipe generator.
 
 ✅ Personalized greeting (Welcome, username!).
 
-⬜ (Optional) Add Logout button to switch users.
 
 ### 2. User Input
 - ✅ Allow users to input available ingredients (text input or selecting from a list).
